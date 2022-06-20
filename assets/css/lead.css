@@ -1,0 +1,185 @@
+html {
+	box-sizing: border-box;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,400;0,500;0,600;0,700;0,800;1,900&display=swap");
+body {
+	font-family: "Montserrat", sans-serif;
+}
+
+/* 
+tr:nth-child(-n+1) td {
+    background-color: #84E084;
+}
+
+tr:nth-child(n+2):nth-child(-n+2) td {
+    background-color: #FFFFA4;
+}
+
+tr:nth-child(n+3) td {
+    background-color: #7c3e7e;
+} */
+
+tr:nth-child(-n + 1) td .rank {
+	background-image: url("../images/1.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+	width: 80px;
+	height: 50px;
+	margin-top: -14px;
+	margin-left: -20px;
+	color: transparent;
+}
+
+tr:nth-child(n + 2):nth-child(-n + 2) td .rank {
+	background-image: url("../images/2.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+	width: 80px;
+	height: 50px;
+	margin-top: -14px;
+	margin-left: -20px;
+	color: transparent;
+}
+
+tr:nth-child(n + 3):nth-child(-n + 3) td .rank {
+	background-image: url("../images/3.png");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+	width: 80px;
+	height: 50px;
+	margin-top: -14px;
+	margin-left: -20px;
+	color: transparent;
+}
+
+tr:nth-child(n + 4) td .rank {
+	background-color: #aba6a9;
+	color: #fefefe;
+}
+
+.rank {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	text-align: center;
+	padding-top: 4px;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.name {
+	text-align: left;
+	font-size: 24px;
+	font-weight: bold;
+	color: #fefefefe;
+	position: relative;
+	left: -2rem;
+	top: 0px;
+	margin: 0px -75px 0px 0px;
+}
+
+.lead-title {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.phone {
+	position: relative;
+	left: 15rem;
+	font-size: 16px;
+	color: #fefefe;
+	top: 0.5rem;
+}
+
+td.point {
+	text-align: end;
+	color: #fefefe;
+	font-size: 24px;
+	font-weight: bold;
+	vertical-align: middle !important;
+}
+
+img.img-fluid.logo {
+	width: 30%;
+}
+
+img.img-fluid.coin {
+	width: 10% !important;
+}
+
+img.img-fluid.footer_ref {
+	width: 50px;
+	height: 50px;
+}
+
+img.img-fluid.footer_img {
+	width: 80px;
+	height: 120px;
+}
+
+@media (max-width: 440px) {
+	img.img-fluid.logo {
+		width: 50%;
+	}
+	img.img-fluid.coin {
+		width: 20% !important;
+	}
+	img.img-fluid.footer_ref {
+		width: 30px;
+		height: 30px;
+	}
+	img.img-fluid.footer_img {
+		width: 60px;
+		height: 80px;
+	}
+	td.point {
+		font-size: 12px;
+	}
+	.name {
+		font-size: 12px;
+		top: 0.5rem;
+	}
+	.phone {
+		left: 3rem;
+		font-size: 12px;
+	}
+}
+
+.table td,
+.table th {
+	padding: 0.75rem;
+	vertical-align: top;
+	border-top: unset !important;
+}
+
+.lead {
+	height: 40vh;
+	position: relative;
+	overflow: scroll;
+}
+
+.table {
+	margin-bottom: 8px;
+	border-radius: unset !important;
+	border: 0px solid;
+	border-collapse: separate;
+	border-spacing: 0 10px;
+}
+
+.card-body {
+	padding: 1rem;
+}
+
+tr {
+	background: rgb(244, 209, 116);
+	background: linear-gradient(
+		270deg,
+		rgba(244, 209, 116, 1) 0%,
+		rgba(244, 129, 55, 1) 100%,
+		rgba(9, 9, 121, 1) 100%
+	);
+}

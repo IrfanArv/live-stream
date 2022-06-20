@@ -1,0 +1,956 @@
+# ************************************************************
+# Sequel Ace SQL dump
+# Version 20033
+#
+# https://sequel-ace.com/
+# https://github.com/Sequel-Ace/Sequel-Ace
+#
+# Host: 10.10.10.75 (MySQL 8.0.26-17)
+# Database: live_stream
+# Generation Time: 2022-05-27 17:54:39 +0000
+# ************************************************************
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+SET NAMES utf8mb4;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE='NO_AUTO_VALUE_ON_ZERO', SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+# Dump of table accounts
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `accounts`;
+
+CREATE TABLE `accounts` (
+  `accounts_id` int NOT NULL AUTO_INCREMENT,
+  `ai_title` varchar(5) DEFAULT NULL,
+  `ai_first_name` varchar(50) DEFAULT NULL,
+  `ai_last_name` varchar(50) DEFAULT NULL,
+  `accounts_email` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '',
+  `accounts_password` varchar(50) NOT NULL,
+  `ai_image` varchar(254) DEFAULT NULL,
+  `accounts_type` enum('webadmin','admin','customers','guest') NOT NULL,
+  `accounts_is_admin` tinyint NOT NULL DEFAULT '0',
+  `accounts_created_at` datetime DEFAULT NULL,
+  `accounts_updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `accounts_status` enum('yes','no') NOT NULL DEFAULT 'yes',
+  `accounts_verified` tinyint DEFAULT '1',
+  `accounts_last_login` bigint DEFAULT NULL,
+  `ai_address` text,
+  `ai_phone` varchar(25) DEFAULT NULL,
+  `ai_city` varchar(254) DEFAULT NULL,
+  `ai_state` varchar(254) DEFAULT NULL,
+  `ai_zip` int DEFAULT NULL,
+  PRIMARY KEY (`accounts_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+LOCK TABLES `accounts` WRITE;
+/*!40000 ALTER TABLE `accounts` DISABLE KEYS */;
+
+INSERT INTO `accounts` (`accounts_id`, `ai_title`, `ai_first_name`, `ai_last_name`, `accounts_email`, `accounts_password`, `ai_image`, `accounts_type`, `accounts_is_admin`, `accounts_created_at`, `accounts_updated_at`, `accounts_status`, `accounts_verified`, `accounts_last_login`, `ai_address`, `ai_phone`, `ai_city`, `ai_state`, `ai_zip`)
+VALUES
+	(1,NULL,'Admin Sharp',NULL,X'61646D696E407765626C792E6964','7c4a8d09ca3762af61e59520943dc26494f8941b','','webadmin',1,NULL,'2022-05-26 19:45:08','yes',1,1631928507,NULL,NULL,NULL,NULL,NULL);
+
+/*!40000 ALTER TABLE `accounts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table commons
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `commons`;
+
+CREATE TABLE `commons` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `quiz_status` int DEFAULT '0',
+  `quiz_time` int DEFAULT NULL,
+  `start_time_quiz` timestamp NULL DEFAULT NULL,
+  `end_time_quiz` timestamp NULL DEFAULT NULL,
+  `vote_status` int DEFAULT '0',
+  `vote_time` int DEFAULT NULL,
+  `start_time_vote` timestamp NULL DEFAULT NULL,
+  `end_time_vote` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+LOCK TABLES `commons` WRITE;
+/*!40000 ALTER TABLE `commons` DISABLE KEYS */;
+
+INSERT INTO `commons` (`id`, `quiz_status`, `quiz_time`, `start_time_quiz`, `end_time_quiz`, `vote_status`, `vote_time`, `start_time_vote`, `end_time_vote`)
+VALUES
+	(1,0,1,NULL,NULL,0,1,NULL,NULL);
+
+/*!40000 ALTER TABLE `commons` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table link
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `link`;
+
+CREATE TABLE `link` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(254) DEFAULT NULL,
+  `uri` varchar(254) DEFAULT NULL,
+  `status` enum('1','0') DEFAULT '1',
+  `updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+LOCK TABLES `link` WRITE;
+/*!40000 ALTER TABLE `link` DISABLE KEYS */;
+
+INSERT INTO `link` (`id`, `name`, `uri`, `status`, `updated`)
+VALUES
+	(1,'LinkedIn','https://www.linkedin.com/company/ptedm/','1','2022-04-19 14:55:44'),
+	(2,'Tiktok','https://www.tiktok.com/@weblyindonesia','1','2022-04-19 14:53:19'),
+	(3,'Instagram','https://www.instagram.com/weblyindonesia/','1','2022-04-19 14:52:48'),
+	(4,'WhatsApp','https://api.whatsapp.com/send?phone=628119189138','1','2022-04-19 14:50:19');
+
+/*!40000 ALTER TABLE `link` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table question_answers
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `question_answers`;
+
+CREATE TABLE `question_answers` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `trivia_id` int NOT NULL,
+  `question_id` int NOT NULL,
+  `answer` int NOT NULL,
+  `status` int NOT NULL,
+  `point_total` int DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+# Dump of table question_details
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `question_details`;
+
+CREATE TABLE `question_details` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `question_id` int NOT NULL,
+  `answer_choice` varchar(255) NOT NULL,
+  `sort_no` int NOT NULL,
+  `is_correct` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+LOCK TABLES `question_details` WRITE;
+/*!40000 ALTER TABLE `question_details` DISABLE KEYS */;
+
+INSERT INTO `question_details` (`id`, `question_id`, `answer_choice`, `sort_no`, `is_correct`)
+VALUES
+	(1,1,'J-Tech Inverter',1,0),
+	(2,1,'Plasmacluster',2,1),
+	(3,1,'Ion Cluster',3,0),
+	(4,1,'Ion Inverter',4,0),
+	(5,2,'AQUOS Sense4 Plus',2,0),
+	(6,2,'AQUOS R3',3,0),
+	(7,2,'AQUOS V6 & V6 Plus',1,1),
+	(8,2,'AQUOS RTX',4,0),
+	(9,3,'Andry Adi Utomo',3,0),
+	(10,3,'Afka Adhitya',1,0),
+	(11,3,'Nurhidayat',2,0),
+	(12,3,'Shinji Teraoka',4,1);
+
+/*!40000 ALTER TABLE `question_details` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table questions
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `questions`;
+
+CREATE TABLE `questions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` text,
+  `menu` int NOT NULL DEFAULT '1' COMMENT '1:xtrivia',
+  `image` varchar(255) DEFAULT NULL,
+  `poin` int NOT NULL,
+  `time` int NOT NULL,
+  `status` int NOT NULL DEFAULT '1' COMMENT '0:unpublisehd - 1:published',
+  `created_at` datetime NOT NULL,
+  `created_by` int NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `updated_by` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+
+LOCK TABLES `questions` WRITE;
+/*!40000 ALTER TABLE `questions` DISABLE KEYS */;
+
+INSERT INTO `questions` (`id`, `title`, `menu`, `image`, `poin`, `time`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`)
+VALUES
+	(1,'Teknologi apa yang di miliki dari Sharp Air Purifier?',1,NULL,15,60,1,'2021-09-21 00:00:00',1,'2021-09-21 00:00:00',1),
+	(2,'Apakah nama tipe Sharp Smartphone terbaru yang mempunyai fitur NFC?',1,NULL,15,60,1,'2021-09-21 00:00:00',1,'2021-09-21 00:00:00',1),
+	(3,'Siapakah nama dari President Director PT Sharp Electronics Indonesia?',1,NULL,15,60,1,'2021-09-21 00:00:00',1,'2021-09-21 00:00:00',1);
+
+/*!40000 ALTER TABLE `questions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table rooms
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `rooms`;
+
+CREATE TABLE `rooms` (
+  `id_room` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(254) DEFAULT NULL,
+  `stream_key` varchar(254) DEFAULT NULL,
+  `status_room` varchar(254) DEFAULT NULL,
+  `quiz_time` int DEFAULT NULL COMMENT 'in minutes',
+  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `id_group` int DEFAULT NULL,
+  `branch_1` varchar(254) DEFAULT NULL,
+  `branch_2` varchar(254) DEFAULT NULL,
+  `branch_3` varchar(254) DEFAULT NULL,
+  `branch_4` varchar(254) DEFAULT NULL,
+  `branch_5` varchar(254) DEFAULT NULL,
+  `branch_6` varchar(254) DEFAULT NULL,
+  `branch_7` varchar(254) DEFAULT NULL,
+  `branch_8` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id_room`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+LOCK TABLES `rooms` WRITE;
+/*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
+
+INSERT INTO `rooms` (`id_room`, `name`, `stream_key`, `status_room`, `quiz_time`, `created`, `updated`, `id_group`, `branch_1`, `branch_2`, `branch_3`, `branch_4`, `branch_5`, `branch_6`, `branch_7`, `branch_8`)
+VALUES
+	(1,'AREA #1','FSpzN30LyDg','1',1,'2022-05-17 03:40:38','2022-05-27 07:43:44',1,'Jakarta','Bogor','Serang','Medan','Padang','Pekanbaru',NULL,NULL),
+	(2,'AREA #2','8_mFXTxaeiE','1',5,'2022-05-25 12:05:55','2022-05-27 07:43:53',2,'Yogyakarta','Bandung','Semarang','Purwokerto','Cirebon','Banjarmasin','Samarinda','Pontianak'),
+	(3,'AREA #3','snfEaWv569o','1',NULL,'2022-05-26 03:25:12','2022-05-27 07:44:00',3,'Kediri','Denpasar','Surabaya','Makasar','Kendari','Manado','Palu',NULL),
+	(4,'AREA #4','aWaVZwQR88E','1',NULL,'2022-05-26 03:25:21','2022-05-27 07:44:10',4,'Jambi','Palembang','Lampung',NULL,NULL,NULL,NULL,NULL);
+
+/*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table users
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `token` varchar(254) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `room` varchar(254) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `branch_user` varchar(254) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `group_id` int DEFAULT NULL,
+  `ip_address` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `user_name` varchar(254) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `full_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(254) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(60) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `game_1_status` int DEFAULT '0',
+  `game_1_score` bigint DEFAULT '0',
+  `voted` int DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+
+INSERT INTO `users` (`id`, `user_id`, `token`, `room`, `branch_user`, `group_id`, `ip_address`, `user_name`, `full_name`, `email`, `phone`, `game_1_status`, `game_1_score`, `voted`, `created`, `modified`)
+VALUES
+	(1,5270,'4a57d9f33089e1d84b5efbb191a438b5',NULL,'PALEMBANG',4,'110.137.142.90','sinarjayajaya081273171738','SINAR JAYA / 33 JAYA','nia1284@suitmedia.com','081273171738',0,0,NULL,'2022-05-27 07:28:26','2022-05-27 07:28:26'),
+	(2,4893,'f6eb8131ec30cf835c2fe883990bd9d9',NULL,'BANDUNG',2,'114.122.73.201','mandiri081327208588','MANDIRI','nia495@suitmedia.com','081327208588',0,0,NULL,'2022-05-27 07:28:40','2022-05-27 07:28:40'),
+	(3,5583,'8a5d6368e12da6712eeb330cc8f2133c',NULL,'Jakarta',1,'110.137.193.204','irfan082116982479','Irfan','nia5465@suitmedia.com','082116982479',0,0,NULL,'2022-05-27 07:28:57','2022-05-27 07:28:57'),
+	(4,5503,'36671c3a478463c41a4bc19a3f219974',NULL,'Lombok (Denpasar)',3,'110.136.217.233','minliong081340528869','Min Liong','nia1345@suitmedia.com','081340528869',0,0,NULL,'2022-05-27 07:29:18','2022-05-27 07:29:18'),
+	(5,4779,'b8503a6fc71454e756382791e2a2ca4e',NULL,'JAKARTA',1,'180.243.6.111','citrajaya087883805994','CITRA JAYA','nia507@suitmedia.com','087883805994',0,0,NULL,'2022-05-27 07:30:04','2022-05-27 07:30:04'),
+	(6,5497,'1fc9963686175caff9781dc60a73415a',NULL,'Lampung',4,'110.137.36.32','choirulhudah082269080808','Choirul Hudah','nia1339@suitmedia.com','082269080808',0,0,NULL,'2022-05-27 07:30:08','2022-05-27 07:30:08'),
+	(7,4807,'f85ceec93ca4dc109f513f7ccd2dc9d6',NULL,'SERANG',1,'115.178.192.35','gemilangbanten087871447579','GEMILANG BANTEN','nia357@suitmedia.com','087871447579',0,0,NULL,'2022-05-27 07:30:19','2022-05-27 07:30:19'),
+	(8,5240,'1d0fa2c9a4045146038ece0a83918bf1',NULL,'DENPASAR',3,'140.213.127.160','ambaraelektronik087864138924','AMBARA ELEKTRONIK','nia993@suitmedia.com','087864138924',0,0,NULL,'2022-05-27 07:30:25','2022-05-27 07:30:25'),
+	(9,4912,'dfe6341e2a42066f18b160a3b131cb35',NULL,'BANDUNG',2,'66.96.225.109','sinarpratama082127244879','SINAR PRATAMA','nia539@suitmedia.com','082127244879',0,0,NULL,'2022-05-27 07:30:52','2022-05-27 07:30:52'),
+	(10,5594,'67fe8b4239857ae86530ff66d5990ab1',NULL,'Jakarta',1,'120.188.5.97','bella089665305534','Bella','nia5478@suitmedia.com','089665305534',0,0,NULL,'2022-05-27 07:30:57','2022-05-27 07:30:57'),
+	(11,5254,'4a909d996a8b5ae96a01b50878f346f9',NULL,'PALEMBANG',4,'110.137.73.157','milaelektronik081273898990','MILA ELEKTRONIK','nia1025@suitmedia.com','081273898990',0,0,NULL,'2022-05-27 07:31:22','2022-05-27 07:31:22'),
+	(12,5502,'8478a899bf8b3fc28661c8088bf6d09b',NULL,'Solo (Yogyakarta)',2,'112.215.243.132','budi081915553800','Budi','nia1344@suitmedia.com','081915553800',0,0,NULL,'2022-05-27 07:32:14','2022-05-27 07:32:14'),
+	(13,5092,'2bbd96649204bcfe4ee7c744c5e0ff0b',NULL,'Purwokerto',2,'36.73.34.253','agustiana081320320103','Agustiana','nia810@suitmedia.com','081320320103',0,0,NULL,'2022-05-27 07:32:14','2022-05-27 07:32:14'),
+	(14,5501,'c8d0feff5f3c3027977dd2d1e4feeb4c',NULL,'Tasikmalaya (Bandung)',2,'36.74.40.123','prima082119867701','Prima','nia1343@suitmedia.com','082119867701',0,0,NULL,'2022-05-27 07:32:27','2022-05-27 07:32:27'),
+	(15,4882,'a4b9de04b8463315c75f8bfc3850cb8e',NULL,'BANDUNG',2,'180.251.251.147','utama089506568224','UTAMA','nia464@suitmedia.com','089506568224',0,0,NULL,'2022-05-27 07:32:29','2022-05-27 07:32:29'),
+	(16,5039,'013ff74ff29ff6646fcc73cde7e4c424',NULL,'PURWOKERTO',2,'114.142.169.15','sinaragung081327959933','SINAR AGUNG','nia721@suitmedia.com','081327959933',0,0,NULL,'2022-05-27 07:32:35','2022-05-27 07:32:35'),
+	(17,5029,'062cda9f87be3497eec50e22fc06086f',NULL,'PURWOKERTO',2,'182.1.112.195','cityelc082226222706','CITY ELC','nia706@suitmedia.com','082226222706',0,0,NULL,'2022-05-27 07:32:47','2022-05-27 07:32:47'),
+	(18,4835,'dc0b29e7fbc611b77a6f1608339888f4',NULL,'BANDUNG',2,'202.80.213.140','majumakmur08164860199','MAJU MAKMUR','nia755@suitmedia.com','08164860199',0,0,NULL,'2022-05-27 07:32:49','2022-05-27 07:32:49'),
+	(19,5282,'6b4cb0550cfeb35ff1e1ef2ff416348a',NULL,'PALEMBANG',4,'125.167.49.115','afuielectronic085267675566','AFUI ELECTRONIC','nia1053@suitmedia.com','085267675566',0,0,NULL,'2022-05-27 07:33:53','2022-05-27 07:33:53'),
+	(20,4842,'3dbdd05845ebe36d4919477a31d96e77',NULL,'BANDUNG',2,'125.164.19.241','cvniagajayasentosa0811209583','CV. NIAGA JAYA SENTOSA','nia428@suitmedia.com','0811209583',0,0,NULL,'2022-05-27 07:33:56','2022-05-27 07:33:56'),
+	(21,4792,'2eb1b7c147268699975e4ddcd22d6497',NULL,'SERANG',1,'180.254.66.36','ceceelektronik085780699522','CECE ELEKTRONIK','nia335@suitmedia.com','085780699522',0,0,NULL,'2022-05-27 07:35:11','2022-05-27 07:35:11'),
+	(22,4689,'46b2dfd2b59bc7b38c9d0fb0a08be31c',NULL,'JAKARTA',1,'125.164.19.175','utamacibadak082117310888','UTAMA CIBADAK','nia210@suitmedia.com','082117310888',0,0,NULL,'2022-05-27 07:35:28','2022-05-27 07:35:28'),
+	(23,5035,'3314182af091a5ab5f0a5392042fd69f',NULL,'SERANG',1,'125.164.22.41','asiabaru081388720367','ASIA BARU','nia714@suitmedia.com','081388720367',0,0,NULL,'2022-05-27 07:35:47','2022-05-27 07:35:47'),
+	(24,5120,'e5a1a98a63adc6aeb32f2972c8dbedbd',NULL,'SURABAYA',3,'36.75.71.61','sumberrejeki085335566779','SUMBER REJEKI','nia855@suitmedia.com','085335566779',0,0,NULL,'2022-05-27 07:36:39','2022-05-27 07:36:39'),
+	(25,5335,'f5e475ff02ee49283a32777316c8a43d',NULL,'JAMBI',4,'180.254.164.146','sumberrezeki08127352299','SUMBER REZEKI','nia1174@suitmedia.com','08127352299',0,0,NULL,'2022-05-27 07:37:25','2022-05-27 07:37:25'),
+	(26,5075,'1327f4f0b2570266b830bea1069b3ba3',NULL,'Bandung',2,'114.122.104.242','sandy0811406958','Sandy','nia785@suitmedia.com','081226212010',0,0,NULL,'2022-05-27 07:37:57','2022-05-27 07:37:57'),
+	(27,4926,'1e654c44400c364f12276c50730de76f',NULL,'CIREBON',2,'112.215.209.43','bangkitjaya082321000985','BANGKIT JAYA','nia563@suitmedia.com','082321000985',0,0,NULL,'2022-05-27 07:38:11','2022-05-27 07:38:11'),
+	(28,5267,'60083b825bb238606f762b9d27d8f864',NULL,'PALEMBANG',4,'180.254.161.86','aminelectronic081367289133','AMIN ELECTRONIC','nia1329@suitmedia.com','081367289133',0,0,NULL,'2022-05-27 07:39:32','2022-05-27 07:39:32'),
+	(29,4486,'22afc5bfaaa5a2f2275164dc683c60f9',NULL,'Bandung',2,'182.0.200.8','ricosharp','Rico Sharp','rico@gmail.com','082143089771',0,0,NULL,'2022-05-27 07:40:10','2022-05-27 07:40:10'),
+	(30,4853,'7e4e2f26fc564d1b21793fa157a07a56',NULL,'BANDUNG',2,'125.164.20.131','abadijaya081222872898','ABADI JAYA','nia426@suitmedia.com','081222872898',0,0,NULL,'2022-05-27 07:40:13','2022-05-27 07:40:13'),
+	(31,4827,'162b2812f1eddbd6bace923c99c9ac76',NULL,'SERANG',1,'110.138.65.128','majulistrik081219776700','MAJU LISTRIK','nia377@suitmedia.com','081219776700',0,0,NULL,'2022-05-27 07:40:21','2022-05-27 07:40:21'),
+	(32,5167,'085dd2fd8dac6847b866ad1833df4cca',NULL,'KEDIRI',3,'36.71.37.223','jelita085312349999','JELITA','nia1009@suitmedia.com','085312349999',0,0,NULL,'2022-05-27 07:42:24','2022-05-27 07:42:24'),
+	(33,4751,'83a44067196d05f9968582df21ccae0c',NULL,'JAKARTA',1,'180.244.165.185','ramahtamah081384757600','RAMAH TAMAH','nia281@suitmedia.com','081384757600',0,0,NULL,'2022-05-27 07:42:47','2022-05-27 07:42:47'),
+	(34,5129,'7a174404a46d7c04765ebf5ddb9921bb',NULL,'SURABAYA',3,'114.122.232.183','barusuperstore085388224499','BARU SUPER STORE','nia864@suitmedia.com','082192814177',0,0,NULL,'2022-05-27 07:43:20','2022-05-27 07:43:20'),
+	(35,5259,'8d2d31d98df2fed0cc8432fcf41670c0',NULL,'PALEMBANG',4,'182.1.229.112','bintanglimaelectronic081379319210','BINTANG LIMA ELECTRONIC','nia1098@suitmedia.com','081379319210',0,0,NULL,'2022-05-27 07:43:49','2022-05-27 07:43:49'),
+	(36,5142,'3ce599e8bee4326f6ea06acff729cf52',NULL,'SURABAYA',3,'114.125.118.144','segara085104040506','SEGARA','nia878@suitmedia.com','085104040506',0,0,NULL,'2022-05-27 07:44:18','2022-05-27 07:44:18'),
+	(37,4498,'cbd999b64cc8807929a476342071ef48',NULL,'JAKARTA',1,'114.124.130.22','larismaniselectronic0811101232','LARIS MANIS ELECTRONIC','nia134@suitmedia.com','0811101232',0,0,NULL,'2022-05-27 07:44:20','2022-05-27 07:44:20'),
+	(38,4933,'7fc6d05cfd379b7c6e781683a31153f6',NULL,'JOGJAKARTA',2,'36.68.9.172','rahmaelektronik089522996522','RAHMA ELEKTRONIK','nia716@suitmedia.com','089522996522',0,0,NULL,'2022-05-27 07:44:23','2022-05-27 07:44:23'),
+	(39,4780,'d970b08349796c1f75d77c7a600a0bfc',NULL,'SERANG',1,'180.254.66.36','telukindah083806980731','TELUK INDAH','nia320@suitmedia.com','083806980731',0,0,NULL,'2022-05-27 07:44:31','2022-05-27 07:44:31'),
+	(40,5582,'352edb44cf43c563fe45b7987304283a',NULL,'Jakarta',1,'111.95.151.12','chenlim081807459722','Chen Lim','nia1465@suitmedia.com','081807459722',0,0,NULL,'2022-05-27 07:45:03','2022-05-27 07:45:03'),
+	(41,5495,'fa34f9d62eeef3f61693bcebfb1cf463',NULL,'Palembang',4,'182.3.71.209','suwan082187082880','Suwan','nia1337@suitmedia.com','082187082880',0,0,NULL,'2022-05-27 07:45:14','2022-05-27 07:45:14'),
+	(42,5316,'a510be170ade2f9d94d659f5d2b138f1',NULL,'JAMBI',4,'125.165.229.88','rajairama08127383962','RAJA IRAMA','nia1155@suitmedia.com','08127383962',0,0,NULL,'2022-05-27 07:45:41','2022-05-27 07:45:41'),
+	(43,5126,'bf3c9b4f4e672eab2ac6206a8715cf92',NULL,'SURABAYA',3,'110.137.103.120','sumberbaru08123492966','SUMBER BARU','nia861@suitmedia.com','08123492966',0,0,NULL,'2022-05-27 07:46:05','2022-05-27 07:46:05'),
+	(44,5596,'c3fcbe292f2f97d917027f11eac8fb23',NULL,'Bandung',2,'182.0.234.36','sutan','Sutan','sutan@gmail.com','081331307731',0,0,NULL,'2022-05-27 07:46:07','2022-05-27 07:46:07'),
+	(45,5157,'1f72839d751420149c240410dcadcabd',NULL,'KEDIRI',3,'110.138.212.80','tokoaa08123418667','TOKO AA','nia934@suitmedia.com','08123418667',0,0,NULL,'2022-05-27 07:46:21','2022-05-27 07:46:21'),
+	(46,5367,'980696f7c3b55f532ee76fe65957313c',NULL,'PALEMBANG',4,'103.108.33.69','arelektronik085266855855','AR ELEKTRONIK','nia1145@suitmedia.com','085266855855',0,0,NULL,'2022-05-27 07:47:19','2022-05-27 07:47:19'),
+	(47,5599,'74b1d0506eb308ebd91802faa362722e',NULL,'DENPASAR',2,'36.75.119.71','suitmedia081122334451','BM Denpasar','suitmedia08185@email.com','081802221717',0,0,NULL,'2022-05-27 07:47:47','2022-05-27 07:47:47'),
+	(48,5098,'29bd21c17398ec7fc4f10e3c07eb3a59',NULL,'Semarang',2,'114.10.7.56','yantheodore0811840775','Yan Theodore','nia818@suitmedia.com','0811840775',0,0,NULL,'2022-05-27 07:48:54','2022-05-27 07:48:54'),
+	(49,4831,'308dc7f8c8769762984be4f3175bc041',NULL,'BOGOR',1,'182.253.151.168','planetelectronic081933366667','PLANET ELECTRONIC','nia381@suitmedia.com','081933366667',0,0,NULL,'2022-05-27 07:50:06','2022-05-27 07:50:06'),
+	(50,5044,'3d102acf6eff0abcd6fe7c38a0702992',NULL,'PURWOKERTO',2,'182.2.69.240','tokojadi081327444751','TOKO JADI','nia728@suitmedia.com','081327444751',0,0,NULL,'2022-05-27 07:51:00','2022-05-27 07:51:00'),
+	(51,5592,'169a93a80baa2a0eb3b3f58b2d846b8d',NULL,'yogyakarta',0,'180.243.73.12','agung_jog','agung jogja','agung_jog@seid.sharp-world.com','081227087733',0,0,NULL,'2022-05-27 07:51:05','2022-05-27 07:51:05'),
+	(52,5279,'e7b68a95ddaa1c2727582794630732ac',NULL,'PALEMBANG',4,'125.167.50.188','sinarbaruelectronicafu082183506070','SINAR BARU ELECTRONIC ( AFU )','nia1050@suitmedia.com','082183506070',0,0,NULL,'2022-05-27 07:51:08','2022-05-27 07:51:08'),
+	(53,5165,'389a3257375401680683a8c9d25153d7',NULL,'KEDIRI',3,'110.138.219.8','jayaabadi087756833600','JAYA ABADI','nia1006@suitmedia.com','087756833600',0,0,NULL,'2022-05-27 07:52:30','2022-05-27 07:52:30'),
+	(54,4760,'5e9adc477d8b69c4e494dc08e15f19e7',NULL,'JAKARTA',1,'180.244.162.8','venus08129396506','VENUS','nia480@suitmedia.com','08129396506',0,0,NULL,'2022-05-27 07:52:58','2022-05-27 07:52:58'),
+	(55,5148,'49078d1f7868ebfe9cccd0242d4be38f',NULL,'KEDIRI',3,'125.164.234.145','pendawa08113850258','PENDAWA','nia884@suitmedia.com','08113850258',0,0,NULL,'2022-05-27 07:53:30','2022-05-27 07:53:30'),
+	(56,4826,'58c412749abb45a0016622b83ced0bee',NULL,'SERANG',1,'182.2.133.6','majujaya081284855973','MAJU JAYA','nia376@suitmedia.com','081284855973',0,0,NULL,'2022-05-27 07:53:35','2022-05-27 07:53:35'),
+	(57,5197,'9aae37eca1f59aefaad0f4c0de6984dc',NULL,'KEDIRI',3,'140.213.59.2','pradiani0818505858','PRADIANI','nia944@suitmedia.com','0818505858',0,0,NULL,'2022-05-27 07:53:59','2022-05-27 07:53:59'),
+	(58,5275,'6468106227a76b7c8dd9eb32f490661e',NULL,'PALEMBANG',4,'125.167.59.219','kandarperdana082269991977','KANDAR / PERDANA 3','nia1328@suitmedia.com','082269991977',0,0,NULL,'2022-05-27 07:54:21','2022-05-27 07:54:21'),
+	(59,5526,'9d30fa21f4b32a492a9a5bd6f9217a81',NULL,'SERANG',1,'180.252.93.229','globalelektronik081399917399','GLOBAL ELEKTRONIK','nia1380@suitmedia.com','081399917399',0,0,NULL,'2022-05-27 07:54:55','2022-05-27 07:54:55'),
+	(60,5000,'fdc40f3041b85499d9f9951d06780b45',NULL,'JOGJAKARTA',2,'36.65.165.167','langgeng089693090738','LANGGENG','nia649@suitmedia.com','089693090738',0,0,NULL,'2022-05-27 07:55:02','2022-05-27 07:55:02'),
+	(61,4526,'85483a692484b7ebfe701bdc2b332715',NULL,'SERANG',1,'180.243.0.86','tangerangjaya081219161068','TANGERANG JAYA','nia39@suitmedia.com','081219161068',0,0,NULL,'2022-05-27 07:55:20','2022-05-27 07:55:20'),
+	(62,4606,'ddd35b9a80a943b39d1d48690a054f9a',NULL,'JAKARTA',1,'140.213.9.230','juli087866752218','JULI','nia121@suitmedia.com','087866752218',0,0,NULL,'2022-05-27 07:55:40','2022-05-27 07:55:40'),
+	(63,5168,'02f6f826715c70cab76b7fe7fb5753d5',NULL,'KEDIRI',3,'114.125.111.180','sumberlistrik0811302072','SUMBER LISTRIK','nia1010@suitmedia.com','0811302072',0,0,NULL,'2022-05-27 07:56:03','2022-05-27 07:56:03'),
+	(64,5155,'00bdbddd2f1bd20087447cd082697b55',NULL,'SURABAYA',3,'36.74.82.252','meidiansurya087853303728','MEIDIAN SURYA','nia891@suitmedia.com','087853303728',0,0,NULL,'2022-05-27 07:56:33','2022-05-27 07:56:33'),
+	(65,5248,'a695a93fbbd0018374c56b27f4d354dc',NULL,'PALEMBANG',4,'125.167.49.21','sinartigaelectronic08127388965','SINAR TIGA ELECTRONIC','nia1019@suitmedia.com','08127388965',0,0,NULL,'2022-05-27 07:56:43','2022-05-27 07:56:43'),
+	(66,5021,'9b653a8f564ca2904204e5e5b28f4edd',NULL,'PURWOKERTO',2,'182.2.41.158','tanaka081391122643','TANAKA','nia693@suitmedia.com','081391122643',0,0,NULL,'2022-05-27 07:56:46','2022-05-27 07:56:46'),
+	(67,4776,'f7853a160b4f70d4b152a555db6bc4fb',NULL,'SERANG',1,'180.254.64.10','bintangtimur081310579198','BINTANG TIMUR','nia555@suitmedia.com','081310579198',0,0,NULL,'2022-05-27 07:57:07','2022-05-27 07:57:07'),
+	(68,5500,'ef6aa91061eb93f13b6bc0f470286c40',NULL,'Jember (Surabaya)',3,'114.125.119.88','nico081336330639','Nico','nia1342@suitmedia.com','081336330639',0,0,NULL,'2022-05-27 07:58:10','2022-05-27 07:58:10'),
+	(69,5579,'061f1bcb928c6439b1a486f4702f5cf0',NULL,'Jakarta',1,'103.135.5.110','dimas087876156526','Dimas','nia1462@suitmedia.com','087876156526',0,0,NULL,'2022-05-27 07:58:17','2022-05-27 07:58:17'),
+	(70,5065,'1306e250f91d89f4cc07820550d73c75',NULL,'PURWOKERTO',2,'36.73.32.196','caelektronik085747202637','CA ELEKTRONIK','nia769@suitmedia.com','085747202637',0,0,NULL,'2022-05-27 07:58:54','2022-05-27 07:58:54'),
+	(71,5340,'40145a9f601e8a452acddda68eaa7996',NULL,'PALEMBANG',4,'114.125.232.52','yantoelectronic085368513800','YANTO ELECTRONIC','nia1117@suitmedia.com','085368513800',0,0,NULL,'2022-05-27 07:59:06','2022-05-27 07:59:06'),
+	(72,5597,'ab19772abd1f23cd4d2fe53c690521d6',NULL,'Palembang',3,'103.135.5.110','raihan','Raihan','raihan@gmail.com','085891027999',0,0,NULL,'2022-05-27 07:59:47','2022-05-27 07:59:47'),
+	(73,4817,'90db5260bfb52ae82e79110d02db6c19',NULL,'JAKARTA',1,'125.160.231.124','ryan08111558913','RYAN','nia524@suitmedia.com','08111558913',0,0,NULL,'2022-05-27 08:00:41','2022-05-27 08:00:41'),
+	(74,5236,'b6aeb94cdf17422880d05aae424ed713',NULL,'DENPASAR',3,'125.166.12.34','masalembo081339514715','MASALEMBO','nia988@suitmedia.com','081339514715',0,0,NULL,'2022-05-27 08:00:49','2022-05-27 08:00:49'),
+	(75,5166,'82666431c4c81ec960352eca5d110889',NULL,'KEDIRI',3,'114.125.85.52','nusaindah082257727668','NUSA INDAH','nia904@suitmedia.com','082257727668',0,0,NULL,'2022-05-27 08:00:55','2022-05-27 08:00:55'),
+	(76,4839,'1c9008db510214578ccef527e6b42109',NULL,'JAKARTA',1,'180.252.112.30','cvsumbermitrajayaelektronik081290141516','CV. SUMBER MITRA JAYA ELEKTRONIK','nia393@suitmedia.com','081290141516',0,0,NULL,'2022-05-27 08:01:12','2022-05-27 08:01:12'),
+	(77,5100,'2e31a56ad814daf06953562901d61806',NULL,'Bogor',1,'140.213.138.146','trisnotirtahidayat087832577877','Trisno Tirta Hidayat','nia820@suitmedia.com','087832577877',0,0,NULL,'2022-05-27 08:01:45','2022-05-27 08:01:45'),
+	(78,5119,'6037ffe783484fc20b10bcd43488169f',NULL,'SURABAYA',3,'118.99.83.51','edison081235206206','EDISON','nia854@suitmedia.com','081235206206',0,0,NULL,'2022-05-27 08:01:48','2022-05-27 08:01:48'),
+	(79,5402,'f3c833e2a0724c5e52ad319317dc5779',NULL,'JAMBI',4,'36.76.194.231','sinarabadisingkut081321210078','SINAR ABADI SINGKUT','nia1189@suitmedia.com','081321210078',0,0,NULL,'2022-05-27 08:02:00','2022-05-27 08:02:00'),
+	(80,4530,'6742a00900f52879e21933414fdbaeeb',NULL,'JAKARTA',1,'110.138.33.85','usahamandiri08118200059','USAHA MANDIRI','nia294@suitmedia.com','08118200059',0,0,NULL,'2022-05-27 08:02:15','2022-05-27 08:02:15'),
+	(81,4615,'8b2dde806d2d9470cf2dbdd1216528bb',NULL,'JAKARTA',1,'112.215.65.89','lanlan08159013839','LAN LAN','nia405@suitmedia.com','08159013839',0,0,NULL,'2022-05-27 08:02:16','2022-05-27 08:02:16'),
+	(82,5496,'c52a30eab63aecff8d9bff3e3fdb300c',NULL,'Jambi',4,'182.3.72.63','andreas082218003125','Andreas','nia1338@suitmedia.com','082218003125',0,0,NULL,'2022-05-27 08:02:57','2022-05-27 08:02:57'),
+	(83,5052,'620fc2b41b2123be55807412ec055e46',NULL,'PURWOKERTO',2,'36.73.33.177','tokomerpati08561191919','TOKO MERPATI','nia739@suitmedia.com','08561191919',0,0,NULL,'2022-05-27 08:03:08','2022-05-27 08:03:08'),
+	(84,5182,'b6fa336855c9dc3d360da4c09b6aa70f',NULL,'KEDIRI',3,'103.252.200.30','samijaya082233443339','SAMI JAYA','nia1005@suitmedia.com','082233443339',0,0,NULL,'2022-05-27 08:03:21','2022-05-27 08:03:21'),
+	(85,5258,'6e51f19aafa4a0cdc2eca085a251e702',NULL,'PALEMBANG',4,'114.125.250.22','tokohendraelectronik082180196061','TOKO HENDRA ELECTRONIK','nia1029@suitmedia.com','082180196061',0,0,NULL,'2022-05-27 08:03:24','2022-05-27 08:03:24'),
+	(86,5268,'4b2c83d60e8002a93bd63406673db7a6',NULL,'PALEMBANG',4,'116.206.35.5','merry081366294582','MERRY','nia1039@suitmedia.com','081366294582',0,0,NULL,'2022-05-27 08:03:35','2022-05-27 08:03:35'),
+	(87,4547,'efeeb5a0c7dca029460af4d797933af5',NULL,'JAKARTA',1,'182.3.37.74','adilahlabuan08129909618','ADILAH LABUAN','nia61@suitmedia.com','08129909618',0,0,NULL,'2022-05-27 08:03:41','2022-05-27 08:03:41'),
+	(88,5134,'6bf3fbaa60f897486ee1d5da1e864813',NULL,'SURABAYA',3,'114.125.77.195','ekajaya081234011888','EKA JAYA','nia869@suitmedia.com','081234011888',0,0,NULL,'2022-05-27 08:03:44','2022-05-27 08:03:44'),
+	(89,5487,'7c4b504553c318424c00c4ab45da6ac8',NULL,'LAMPUNG',4,'114.125.251.57','gajahtunggal089622222110','GAJAH TUNGGAL','nia1306@suitmedia.com','089622222110',0,0,NULL,'2022-05-27 08:03:58','2022-05-27 08:03:58'),
+	(90,5093,'93a742951c96acff87a3defdfb53d07b',NULL,'Yogyakarta',2,'180.243.73.12','anton08112957584','Anton','nia811@suitmedia.com','08112957584',0,0,NULL,'2022-05-27 08:04:19','2022-05-27 08:04:19'),
+	(91,4815,'cc23415b45069e59c67c6372b56b6393',NULL,'SERANG',1,'182.0.242.238','jayae081386722479','JAYA E','nia365@suitmedia.com','081386722479',0,0,NULL,'2022-05-27 08:04:22','2022-05-27 08:04:22'),
+	(92,5183,'584fb9e33fe01baa37c6c47cd6a336fc',NULL,'KEDIRI',3,'114.125.101.116','surya081330853838','SURYA','nia926@suitmedia.com','081330853838',0,0,NULL,'2022-05-27 08:04:31','2022-05-27 08:04:31'),
+	(93,5387,'53ecf67e66a717fc524c46825187da7e',NULL,'LAMPUNG',4,'36.69.57.134','aan082176663373','AAN','nia1276@suitmedia.com','082176663373',0,0,NULL,'2022-05-27 08:05:06','2022-05-27 08:05:06'),
+	(94,5117,'5e99b6dfe5883baae9e88a4684994903',NULL,'SURABAYA',3,'125.166.119.187','nasionalbws081335595952','NASIONAL BWS','nia852@suitmedia.com','081335595952',0,0,NULL,'2022-05-27 08:05:12','2022-05-27 08:05:12'),
+	(95,4960,'df552d29822f933841970542301e90f8',NULL,'CIREBON',2,'180.241.241.96','langgan087881661851','LANGGAN 3','nia601@suitmedia.com','087881661851',0,0,NULL,'2022-05-27 08:05:44','2022-05-27 08:05:44'),
+	(96,5517,'92bc52cbed578b66bd050ff4207d4842',NULL,'BOGOR',1,'125.161.119.226','tokomegaindah08129487695','TOKO MEGA INDAH','nia1371@suitmedia.com','08129487695',0,0,NULL,'2022-05-27 08:06:22','2022-05-27 08:06:22'),
+	(97,5140,'f0b02a8c4b8bd5d191932d9cfbb586bc',NULL,'KEDIRI',3,'114.125.92.88','rjjunior081359598899','RJ JUNIOR','nia1011@suitmedia.com','081359598899',0,0,NULL,'2022-05-27 08:06:44','2022-05-27 08:06:44'),
+	(98,4923,'4b8204413eb91ec8397652cc644580bd',NULL,'SERANG',1,'125.161.157.253','planete085215506551','PLANET E','nia551@suitmedia.com','085215506551',0,0,NULL,'2022-05-27 08:06:48','2022-05-27 08:06:48'),
+	(99,5079,'3316560d7c9777efdc625a662e5e7418',NULL,'SEMARANG',2,'114.10.23.228','ananda085641789456','ANANDA','nia796@suitmedia.com','085641789456',0,0,NULL,'2022-05-27 08:07:20','2022-05-27 08:07:20'),
+	(100,5313,'af868ec2e8cbcdba0cdb6521cd06770d',NULL,'JAMBI',4,'180.242.44.201','sansui0811742888','SANSUI','nia1288@suitmedia.com','0811742888',0,0,NULL,'2022-05-27 08:07:25','2022-05-27 08:07:25'),
+	(101,4669,'013434b00b0377860ce22a451a53f49a',NULL,'JAKARTA',1,'140.213.136.3','smijakarta081220715777','SMI JAKARTA','nia424@suitmedia.com','081220715777',0,0,NULL,'2022-05-27 08:08:47','2022-05-27 08:08:47'),
+	(102,5453,'486b7cf8dc51b41f6a3a10dde7da5e15',NULL,'LAMPUNG',4,'110.137.38.189','nico081219310310','NICO','nia1246@suitmedia.com','081219310310',0,0,NULL,'2022-05-27 08:08:54','2022-05-27 08:08:54'),
+	(103,5127,'59a17c7f84c8caa8a50964839072014e',NULL,'SURABAYA',3,'120.188.77.52','dindingelektronik082121210953','DINDING ELEKTRONIK','nia894@suitmedia.com','082121210953',0,0,NULL,'2022-05-27 08:08:59','2022-05-27 08:08:59'),
+	(104,5264,'e7ad54fb1fbe80ac6b907f921f546916',NULL,'PALEMBANG',4,'36.77.78.10','tokobalipermaibes082186811112','TOKO BALI PERMAI/BES','nia1280@suitmedia.com','082186811112',0,0,NULL,'2022-05-27 08:08:59','2022-05-27 08:08:59'),
+	(105,4534,'54c1dab15cbbf934596951dfcc349f6c',NULL,'JAKARTA',1,'114.141.53.26','azkaaircond087885769260','AZKA AIRCOND.','nia48@suitmedia.com','087885769260',0,0,NULL,'2022-05-27 08:09:04','2022-05-27 08:09:04'),
+	(106,5376,'c121c1bce87517657e84b6531ef294f7',NULL,'LAMPUNG',4,'114.125.57.74','john081369598609','JOHN','nia1158@suitmedia.com','081369598609',0,0,NULL,'2022-05-27 08:09:10','2022-05-27 08:09:10'),
+	(107,5072,'3b6817900af4b4c76363ca2877e19b85',NULL,'Cirebon',2,'114.122.68.147','susanto08121222728','Susanto','nia781@suitmedia.com','08121222728',0,0,NULL,'2022-05-27 08:09:58','2022-05-27 08:09:58'),
+	(108,5595,'89fc12cde052b47cf36690683464582a',NULL,'Bandung',2,'114.124.245.10','putra','Putra','putra@gmail.com','081281618973',0,0,NULL,'2022-05-27 08:10:40','2022-05-27 08:10:40'),
+	(109,5152,'676bdf7f55a116d057cf150367cbf0fc',NULL,'SURABAYA',3,'140.213.44.155','velektronik08123243247','V9 ELEKTRONIK','nia888@suitmedia.com','08123243247',0,0,NULL,'2022-05-27 08:10:46','2022-05-27 08:10:46'),
+	(110,5064,'7a87d2332602116cdb63493891e12ba0',NULL,'PURWOKERTO',2,'202.80.213.168','memehindah0895386296883','MEMEH INDAH','nia766@suitmedia.com','0895386296883',0,0,NULL,'2022-05-27 08:10:59','2022-05-27 08:10:59'),
+	(111,5290,'5dffc09729f9357efbc83f8ec606cf17',NULL,'PALEMBANG',4,'182.3.101.205','aldomanak082282057566','ALDO MANAK','nia1319@suitmedia.com','082282057566',0,0,NULL,'2022-05-27 08:11:04','2022-05-27 08:11:04'),
+	(112,4670,'5fbac9cb556da07aa893b3f29e61b264',NULL,'SERANG',1,'180.214.233.76','rangkasindah081352646566','RANGKAS INDAH','nia800@suitmedia.com','081352646566',0,0,NULL,'2022-05-27 08:11:11','2022-05-27 08:11:11'),
+	(113,5458,'227edb2c80a4617f0d9f14fd56f87ae6',NULL,'LAMPUNG',4,'182.3.101.193','asia082185388330','ASIA','nia1252@suitmedia.com','082185388330',0,0,NULL,'2022-05-27 08:11:45','2022-05-27 08:11:45'),
+	(114,5554,'c760fed7753583b4c3f690aeecf28271',NULL,'BOGOR',1,'182.253.127.164','duasaudara081381649090','DUA SAUDARA','nia1421@suitmedia.com','081381649090',0,0,NULL,'2022-05-27 08:11:59','2022-05-27 08:11:59'),
+	(115,5285,'a2b6f0d67d89b88ebd22efb8421818a4',NULL,'PALEMBANG',4,'114.125.104.113','akaielectronicafut082178793232','AKAI ELECTRONIC/AFUT','nia1056@suitmedia.com','082178793232',0,0,NULL,'2022-05-27 08:12:18','2022-05-27 08:12:18'),
+	(116,4833,'56abd6d8c810b4babaae3f32cbaddd07',NULL,'BOGOR',1,'114.4.78.15','dbestelectronic085860639022','DBEST ELECTRONIC','nia383@suitmedia.com','085860639022',0,0,NULL,'2022-05-27 08:13:17','2022-05-27 08:13:17'),
+	(117,5416,'5959951508d6cd362f94459e8a50af8d',NULL,'LAMPUNG',4,'114.125.251.17','saranasahabatmaju081278276710','SARANA SAHABAT MAJU','nia1205@suitmedia.com','081278276710',0,0,NULL,'2022-05-27 08:13:33','2022-05-27 08:13:33'),
+	(118,5060,'87456e6125684e79d6165ac1f8de6594',NULL,'PURWOKERTO',2,'36.73.33.141','tokosinar0811261180','TOKO SINAR','nia750@suitmedia.com','0811261180',0,0,NULL,'2022-05-27 08:13:35','2022-05-27 08:13:35'),
+	(119,4788,'b66aa9fa1bf750a92064d591a25690a4',NULL,'JAKARTA',1,'180.252.118.155','ptdimarmelimpahrezeki081289930888','PT DIMAR MELIMPAH REZEKI','nia329@suitmedia.com','081289930888',0,0,NULL,'2022-05-27 08:13:35','2022-05-27 08:13:35'),
+	(120,4754,'1c1b36a635a7029657a78c08cb123332',NULL,'JAKARTA',1,'182.0.197.94','spearifin085230007455','SPE/ARIFIN','nia286@suitmedia.com','085230007455',0,0,NULL,'2022-05-27 08:13:40','2022-05-27 08:13:40'),
+	(121,5395,'0739eade4899da10ca9800ed243cf042',NULL,'JAMBI',4,'180.254.163.64','sinarjaya081366740325','SINAR JAYA','nia1181@suitmedia.com','081366740325',0,0,NULL,'2022-05-27 08:13:48','2022-05-27 08:13:48'),
+	(122,5480,'e875079b4fb597d87f3904c3c73689ff',NULL,'LAMPUNG',4,'110.137.36.13','sinarutama081369116069','SINAR UTAMA','nia1286@suitmedia.com','081369116069',0,0,NULL,'2022-05-27 08:14:02','2022-05-27 08:14:02'),
+	(123,4765,'f7b20d4e01df082729e1894541f67e5a',NULL,'JAKARTA',1,'103.144.175.28','sinarabadi081905037098','SINAR ABADI','nia302@suitmedia.com','081905037098',0,0,NULL,'2022-05-27 08:14:13','2022-05-27 08:14:13'),
+	(124,4918,'582086f3cef9fde1fb0c41b8322999e9',NULL,'CIREBON',2,'182.253.127.207','sinarindah082127756378','SINAR INDAH','nia546@suitmedia.com','082127756378',0,0,NULL,'2022-05-27 08:15:02','2022-05-27 08:15:02'),
+	(125,4488,'c60de786ed76b70c9c266b68992c78b5',NULL,'SERANG',1,'182.3.39.3','rahayu087772144484','RAHAYU','nia558@suitmedia.com','087772144484',0,0,NULL,'2022-05-27 08:15:51','2022-05-27 08:15:51'),
+	(126,5297,'cd684234b0dd0f29974759bf47076cb9',NULL,'PALEMBANG',4,'125.167.58.246','eralahat081367526889','ERA LAHAT','nia1069@suitmedia.com','081367526889',0,0,NULL,'2022-05-27 08:16:51','2022-05-27 08:16:51'),
+	(127,4808,'8b9c980c9dadcf4f7fb51c78ef6fbe8d',NULL,'SERANG',1,'61.94.54.80','hiburan081317426588','HIBURAN','nia358@suitmedia.com','081317426588',0,0,NULL,'2022-05-27 08:16:56','2022-05-27 08:16:56'),
+	(128,4661,'edd65b81d91d83f1a7526df5b0741515',NULL,'SERANG',1,'182.0.198.190','benuaindah081288661154','BENUA INDAH','nia180@suitmedia.com','081288661154',0,0,NULL,'2022-05-27 08:16:59','2022-05-27 08:16:59'),
+	(129,5284,'fe844ac8f04e83651521d0614a59cb89',NULL,'PALEMBANG',4,'125.167.57.145','fajarelectronic082177590077','FAJAR ELECTRONIC','nia1055@suitmedia.com','082177590077',0,0,NULL,'2022-05-27 08:17:21','2022-05-27 08:17:21'),
+	(130,5074,'13e89e8b52d5355f651aa0380e20b670',NULL,'SEMARANG',2,'182.2.39.8','jayaabadi085740045216','JAYA ABADI','nia784@suitmedia.com','085740045216',0,0,NULL,'2022-05-27 08:17:45','2022-05-27 08:17:45'),
+	(131,5266,'8d828f5d04ce38a9a9dc252d28503ffe',NULL,'PALEMBANG',4,'110.137.75.129','bowokmannamjlenikutau085273220007','BOWOK MANNA/MJ LENI KUTAU','nia1037@suitmedia.com','085273220007',0,0,NULL,'2022-05-27 08:17:55','2022-05-27 08:17:55'),
+	(132,5293,'99a2fc6e40a1b5901194763e7e32a79d',NULL,'PALEMBANG',4,'116.206.35.9','megatamaelectronic08128306433','MEGATAMA ELECTRONIC','nia1335@suitmedia.com','08128306433',0,0,NULL,'2022-05-27 08:18:27','2022-05-27 08:18:27'),
+	(133,5271,'7fd7dec4cf032cac4114f914b0280ba0',NULL,'PALEMBANG',4,'180.242.9.48','cvbes082371855216','CV BES','nia1042@suitmedia.com','082371855216',0,0,NULL,'2022-05-27 08:20:29','2022-05-27 08:20:29'),
+	(134,4818,'673a386b62b70e8e5438431e2fdf49fb',NULL,'JAKARTA',1,'182.0.181.33','selkaid081315518787','SELKA.ID','nia368@suitmedia.com','081315518787',0,0,NULL,'2022-05-27 08:21:42','2022-05-27 08:21:42'),
+	(135,4531,'ec735b866018f40c51ae6eb4d057a51e',NULL,'JAKARTA',1,'180.252.171.248','aloypsrbengkong087880005401','ALOY PSR BENGKONG','nia68@suitmedia.com','087880005401',0,0,NULL,'2022-05-27 08:22:20','2022-05-27 08:22:20'),
+	(136,5386,'589a2bf2ada88fd9f40da83ebd14e738',NULL,'LAMPUNG',4,'114.125.249.69','saenda081379771663','SAENDA','nia1316@suitmedia.com','081379771663',0,0,NULL,'2022-05-27 08:22:30','2022-05-27 08:22:30'),
+	(137,4535,'97e8314c7a37f658aa48252f7ac60d51',NULL,'JAKARTA',1,'180.244.166.119','terangtambun08129197129','TERANG - TAMBUN','nia205@suitmedia.com','08129197129',0,0,NULL,'2022-05-27 08:23:27','2022-05-27 08:23:27'),
+	(138,4802,'980851830c6330e84258ce225d517748',NULL,'JAKARTA',1,'182.0.173.1','anekae081213238103','ANEKA E','nia351@suitmedia.com','081213238103',0,0,NULL,'2022-05-27 08:23:28','2022-05-27 08:23:28'),
+	(139,5600,'2cac305b5284c2fd604aa1aecfb8cac7',NULL,'kediri',0,'36.74.66.31','jerry_bmkediri','jerry bm kediri','jerry@gmail.com','081932429955',0,0,NULL,'2022-05-27 08:23:30','2022-05-27 08:23:30'),
+	(140,4560,'630501c48e1d2f875bd096f6c967d0cf',NULL,'JAKARTA',1,'120.188.92.35','bahagiaecikarang08161361736','BAHAGIA E CIKARANG','nia75@suitmedia.com','08161361736',0,0,NULL,'2022-05-27 08:25:21','2022-05-27 08:25:21'),
+	(141,5150,'99f07aae7ee894f3977758a948917f1e',NULL,'KEDIRI',3,'180.253.162.142','sumberarto081217996707','SUMBER ARTO','nia886@suitmedia.com','081217996707',0,0,NULL,'2022-05-27 08:25:32','2022-05-27 08:25:32'),
+	(142,5190,'70ccd7254e62601c548c9c246ab97b53',NULL,'DENPASAR',3,'180.249.185.234','mapanjaya08123984111','MAPAN JAYA','nia937@suitmedia.com','08123984111',0,0,NULL,'2022-05-27 08:25:46','2022-05-27 08:25:46'),
+	(143,5561,'0e7bc47bba97991d92168feac1d496b9',NULL,'SERANG',1,'140.213.132.121','mustikajayabogor08872236493','MUSTIKA JAYA BOGOR','nia1430@suitmedia.com','08872236493',0,0,NULL,'2022-05-27 08:25:47','2022-05-27 08:25:47'),
+	(144,5336,'5dcb3f69640bfcf8bf1b7e756d8ca80e',NULL,'PALEMBANG',4,'182.253.250.161','nusantaraelectronic08127175350','NUSANTARA ELECTRONIC','nia1113@suitmedia.com','08127175350',0,0,NULL,'2022-05-27 08:26:29','2022-05-27 08:26:29'),
+	(145,4820,'53028fc862eb8929939ce8b3c01990df',NULL,'JAKARTA',1,'180.214.232.17','sja08985052348','SJA','nia370@suitmedia.com','08985052348',0,0,NULL,'2022-05-27 08:27:35','2022-05-27 08:27:35'),
+	(146,4834,'4eb606c7cb054560fc590420b0ba7e9c',NULL,'BOGOR',1,'125.164.23.24','adeelectronic08128989363','ADE ELECTRONIC','nia385@suitmedia.com','08128989363',0,0,NULL,'2022-05-27 08:27:40','2022-05-27 08:27:40'),
+	(147,4849,'86e7d870ce11a8915cbd80b8d2f23ac4',NULL,'BANDUNG',2,'180.241.240.152','cvbangkitjaya08112480023','CV. BANGKIT JAYA','nia421@suitmedia.com','08112480023',0,0,NULL,'2022-05-27 08:28:21','2022-05-27 08:28:21'),
+	(148,5322,'14f8592dc41f264e4d2b200abbbeb866',NULL,'PALEMBANG',4,'114.125.43.198','jayabersama081261630908','JAYA BERSAMA','nia1096@suitmedia.com','081261630908',0,0,NULL,'2022-05-27 08:28:25','2022-05-27 08:28:25'),
+	(149,4822,'298ed9da0f946d676a2f6545fede000f',NULL,'JAKARTA',1,'114.4.212.147','sumberterang08568866997','SUMBER TERANG','nia372@suitmedia.com','08568866997',0,0,NULL,'2022-05-27 08:28:47','2022-05-27 08:28:47'),
+	(150,4554,'a58290f605c266fe8a32abc71434b9f2',NULL,'JAKARTA',1,'180.243.10.216','alvindo081319411481','ALVINDO','nia69@suitmedia.com','081319411481',0,0,NULL,'2022-05-27 08:28:48','2022-05-27 08:28:48'),
+	(151,4797,'15f576bd293edd162e365fea891a30f9',NULL,'JAKARTA',1,'114.124.211.214','suryajayaelektronik085781927779','SURYA JAYA ELEKTRONIK','nia504@suitmedia.com','085781927779',0,0,NULL,'2022-05-27 08:29:17','2022-05-27 08:29:17'),
+	(152,4716,'3b72eea122b26e02ca7ccd1253424ef6',NULL,'SERANG',1,'223.255.230.74','claudiae081318329920','CLAUDIA E','nia240@suitmedia.com','081318329920',0,0,NULL,'2022-05-27 08:30:06','2022-05-27 08:30:06'),
+	(153,4505,'806ca03dd2abe5fdc5baf8d42f1ad28d',NULL,'JAKARTA',1,'120.188.66.103','ptmakmurjayahaholongan081386169980','PT. MAKMUR JAYA HAHOLONGAN','nia330@suitmedia.com','081386169980',0,0,NULL,'2022-05-27 08:30:20','2022-05-27 08:30:20'),
+	(154,5584,'e3c9cbb7fd4de358899a105779d60c3a',NULL,'Jakarta',1,'202.80.216.98','niaanggriani087808615111','Nia Anggriani','nia1467@suitmedia.com','087808615111',0,0,NULL,'2022-05-27 08:31:12','2022-05-27 08:31:12'),
+	(155,5477,'d9e733ed054a38f8d57d693eef4e20e8',NULL,'LAMPUNG',4,'110.137.36.98','karunia085377070967','KARUNIA','nia1317@suitmedia.com','085377070967',0,0,NULL,'2022-05-27 08:31:51','2022-05-27 08:31:51'),
+	(156,5214,'abccd1742ccbbbb3cbc669dc7342e744',NULL,'DENPASAR',3,'180.249.157.124','istanaelektronik08123078415','ISTANA ELEKTRONIK','nia987@suitmedia.com','08123078415',0,0,NULL,'2022-05-27 08:32:15','2022-05-27 08:32:15'),
+	(157,5080,'97a773d24964da037e635f723defc9d2',NULL,'SEMARANG',2,'103.122.67.145','barokahjaken081390567115','BAROKAH JAKEN','nia791@suitmedia.com','081390567115',0,0,NULL,'2022-05-27 08:32:21','2022-05-27 08:32:21'),
+	(158,5255,'b9b9f9c59cf3749f80d7d79745583ada',NULL,'PALEMBANG',4,'110.137.74.16','tokojelita085273238629','TOKO JELITA','nia1331@suitmedia.com','085273238629',0,0,NULL,'2022-05-27 08:32:45','2022-05-27 08:32:45'),
+	(159,5096,'230a3569fad19e2d5167c2c929a0505b',NULL,'SERANG',1,'36.74.40.145','sim08122120451','SIM','nia815@suitmedia.com','08122120451',0,0,NULL,'2022-05-27 08:33:01','2022-05-27 08:33:01'),
+	(160,5332,'684ff8d1796eef9fdad8434643ced693',NULL,'PALEMBANG',4,'114.125.236.195','akuramaelectronic081377766588','AKURAMA ELECTRONIC','nia1109@suitmedia.com','081377766588',0,0,NULL,'2022-05-27 08:35:45','2022-05-27 08:35:45'),
+	(161,5212,'f692807e278e35b8f3e928142be2c074',NULL,'DENPASAR',3,'182.253.132.226','gajahmada082236655575','GAJAH MADA','nia959@suitmedia.com','082236655575',0,0,NULL,'2022-05-27 08:37:37','2022-05-27 08:37:37'),
+	(162,4953,'936e8a4a176b74ddaec12aecc97ada32',NULL,'SERANG',1,'140.213.140.198','prima087774126799','PRIMA','nia592@suitmedia.com','087774126799',0,0,NULL,'2022-05-27 08:39:44','2022-05-27 08:39:44'),
+	(163,5186,'732f1550c13c81e4cf5c2f6e0de7b15d',NULL,'SERANG',1,'116.206.29.7','twinjaya0819667519384','TWIN JAYA','nia930@suitmedia.com','0819667519384',0,0,NULL,'2022-05-27 08:39:47','2022-05-27 08:39:47'),
+	(164,5055,'17b4e3d270ca873219af698fe08d95da',NULL,'SEMARANG',2,'112.215.243.47','janani085700878024','JANANI','nia742@suitmedia.com','085700878024',0,0,NULL,'2022-05-27 08:39:48','2022-05-27 08:39:48'),
+	(165,4970,'d6cd17b6fd7f947c9d80667045df21a8',NULL,'JOGJAKARTA',2,'36.73.35.114','kikijaya08156803597','KIKI JAYA','nia768@suitmedia.com','08156803597',0,0,NULL,'2022-05-27 08:40:25','2022-05-27 08:40:25'),
+	(166,5531,'f272690bb7d71f1162bd85e495cbdcb0',NULL,'BOGOR',1,'114.124.239.246','suarabahagia08128022922','SUARA BAHAGIA','nia1388@suitmedia.com','08128022922',0,0,NULL,'2022-05-27 08:41:31','2022-05-27 08:41:31'),
+	(167,5125,'f3b38d5a014b7b77b704b07852715058',NULL,'SURABAYA',3,'180.253.166.20','abgelektronikdlberkat081330712434','ABG ELEKTRONIK (DL BERKAT)','nia860@suitmedia.com','081330712434',0,0,NULL,'2022-05-27 08:43:33','2022-05-27 08:43:33'),
+	(168,5601,'1de8aa15ff639c796f8a09022dfd3967',NULL,'',0,'182.3.36.219','nagatimur','PT NAGA TIMUR','nagatimur@gmail.com','0811805318',0,0,NULL,'2022-05-27 08:44:13','2022-05-27 08:44:13'),
+	(169,5090,'27adba1342001f92c8327183a2c481ca',NULL,'SEMARANG',2,'113.11.183.68','cvanugrahmandiri082331500804','CV. ANUGRAH MANDIRI','nia806@suitmedia.com','082331500804',0,0,NULL,'2022-05-27 08:45:33','2022-05-27 08:45:33'),
+	(170,5359,'e857e4489c0f5af3b9d55b1f9f5c3313',NULL,'PALEMBANG',4,'110.137.74.136','marshamarcel082378755556','MARSHA MARCEL','nia1137@suitmedia.com','082378755556',0,0,NULL,'2022-05-27 08:46:38','2022-05-27 08:46:38'),
+	(171,4523,'4b8707ad2d857940f694ab190fc41539',NULL,'JAKARTA',1,'182.0.242.144','tkduta081399999767','TK. DUTA','nia36@suitmedia.com','081399999767',0,0,NULL,'2022-05-27 08:50:28','2022-05-27 08:50:28'),
+	(172,4828,'59c7eb930e19e48fddcc2b3a20be5a64',NULL,'SERANG',1,'114.124.240.26','megae081318188866','MEGA E','nia557@suitmedia.com','081318188866',0,0,NULL,'2022-05-27 08:51:16','2022-05-27 08:51:16'),
+	(173,5587,'e4cb14f0226f7705d700725396015740',NULL,'SEMARANG',2,'140.213.169.210','dewataru081802404041','DEWA TARU','dewataru081802404041@email.com','081802404041',0,0,NULL,'2022-05-27 08:51:21','2022-05-27 08:51:21'),
+	(174,4757,'d2cf4853724da155257cff4ca8d1def0',NULL,'JAKARTA',1,'114.124.176.55','topjayaciputat081287884143','TOP JAYA - CIPUTAT','nia291@suitmedia.com','081287884143',0,0,NULL,'2022-05-27 08:52:26','2022-05-27 08:52:26'),
+	(175,5062,'ed314bdd5aee75d4ac67f8f04dc1efc0',NULL,'PURWOKERTO',2,'182.2.72.115','gemilangberkah082326849221','GEMILANG BERKAH','nia758@suitmedia.com','082326849221',0,0,NULL,'2022-05-27 08:53:15','2022-05-27 08:53:15'),
+	(176,4846,'c9cd561a3ec54eeaa369e3e7acbf130a',NULL,'BANDUNG',2,'125.164.17.120','kencanaelektronik081910388873','KENCANA ELEKTRONIK','nia413@suitmedia.com','081910388873',0,0,NULL,'2022-05-27 08:53:33','2022-05-27 08:53:33'),
+	(177,5585,'44ba0accba69d025b3578780e2bf2680',NULL,'SERANG',1,'182.3.41.197','hariselektronik081806515808','HARIS ELEKTRONIK','niaref@suitmedia.com','081806515808',0,0,NULL,'2022-05-27 08:55:42','2022-05-27 08:55:42'),
+	(178,5420,'eedb38a489345ce172e4395a512cd56d',NULL,'LAMPUNG',4,'182.1.232.19','fendy081321156868','FENDY','nia1297@suitmedia.com','081321156868',0,0,NULL,'2022-05-27 08:57:28','2022-05-27 08:57:28'),
+	(179,5038,'62ff083928c1dee6f7c323defd11e0cf',NULL,'PURWOKERTO',2,'36.73.33.119','benangmulia082137841365','BENANG MULIA','nia719@suitmedia.com','082137841365',0,0,NULL,'2022-05-27 08:59:01','2022-05-27 08:59:01'),
+	(180,4683,'82e7ee921aae427017ea42a84b2900c4',NULL,'JAKARTA',1,'103.47.135.148','sumbersinarjaya0811441885','SUMBER SINAR JAYA','nia430@suitmedia.com','0811441885',0,0,NULL,'2022-05-27 08:59:32','2022-05-27 08:59:32'),
+	(181,5304,'8baa60c40c37a818f59036a72973c71a',NULL,'PALEMBANG',4,'182.1.229.226','ckaho082186639366','CK AHO','nia1324@suitmedia.com','082186639366',0,0,NULL,'2022-05-27 09:01:53','2022-05-27 09:01:53'),
+	(182,5593,'c0a7ce5ce471fab3cb1e994e18a913c5',NULL,'Jakarta',1,'103.135.5.110','tedy','Tedy','tedy@gmail.com','082256238623',0,0,NULL,'2022-05-27 09:02:08','2022-05-27 09:02:08'),
+	(183,5189,'13c2a6db6b17d0b547591da0358d719d',NULL,'DENPASAR',3,'140.213.150.145','balijaya087863209070','BALI JAYA','nia936@suitmedia.com','087863209070',0,0,NULL,'2022-05-27 09:02:50','2022-05-27 09:02:50'),
+	(184,5393,'9756336efd90a845cdfb124c9397d06e',NULL,'JAMBI',4,'125.167.49.164','karinaelectronik089508829434','KARINA ELECTRONIK','nia1292@suitmedia.com','089508829434',0,0,NULL,'2022-05-27 09:03:06','2022-05-27 09:03:06'),
+	(185,5289,'ccf2a05dd7f9daeb4e84a6f4ad737ff2',NULL,'PALEMBANG',4,'103.144.14.26','agungcurup085273189123','AGUNG CURUP','nia1061@suitmedia.com','085273189123',0,0,NULL,'2022-05-27 09:04:19','2022-05-27 09:04:19'),
+	(186,5523,'8b54e817b872fb4cc36e767e4e4de6f0',NULL,'BOGOR',1,'180.252.135.135','tokogudangpusat082255349584','TOKO GUDANG PUSAT','nia1377@suitmedia.com','082255349584',0,0,NULL,'2022-05-27 09:06:30','2022-05-27 09:06:30'),
+	(187,5243,'48668d32f71796e8bda61d9e50d8f94b',NULL,'DENPASAR',3,'114.122.132.74','bumielektronik087869624693','BUMI ELEKTRONIK','nia996@suitmedia.com','087869624693',0,0,NULL,'2022-05-27 09:06:48','2022-05-27 09:06:48'),
+	(188,5324,'b030435bb9e6077b11b35df419d9a1ba',NULL,'JAMBI',4,'125.167.58.142','ahnelectronics08127407177','AHN ELECTRONICS','nia1196@suitmedia.com','08127407177',0,0,NULL,'2022-05-27 09:08:45','2022-05-27 09:08:45'),
+	(189,5320,'136bf1529bae75aec225dcb885adc6e7',NULL,'PALEMBANG',4,'114.125.247.136','dutabengkulu085215078880','DUTA BENGKULU','nia1334@suitmedia.com','085215078880',0,0,NULL,'2022-05-27 09:09:06','2022-05-27 09:09:06'),
+	(190,5536,'53404c9e3dcf8673012a88ad2ceb69a5',NULL,'BOGOR',1,'125.160.238.15','duta081315007983','DUTA','nia1393@suitmedia.com','081315007983',0,0,NULL,'2022-05-27 09:12:40','2022-05-27 09:12:40'),
+	(191,5321,'0813cd9b9d733472dcc3535c5c130c06',NULL,'PALEMBANG',4,'125.165.213.248','kingberingin082176222463','KING BERINGIN','nia1095@suitmedia.com','082176222463',0,0,NULL,'2022-05-27 09:16:40','2022-05-27 09:16:40'),
+	(192,5257,'dda7bd564c05d4250a4b2341f244632b',NULL,'PALEMBANG',4,'110.137.74.222','tokoratuirama08127815774','TOKO RATU IRAMA','nia1028@suitmedia.com','08127815774',0,0,NULL,'2022-05-27 09:16:55','2022-05-27 09:16:55'),
+	(193,5328,'df06f82339f0b01b0925822e609c2c29',NULL,'PALEMBANG',4,'180.242.6.191','sinarmaselectronicakiun082175563554','SINAR MAS ELECTRONIC/AKIUN','nia1103@suitmedia.com','082175563554',0,0,NULL,'2022-05-27 09:18:59','2022-05-27 09:18:59'),
+	(194,4722,'f633b5fadeb1b5f7e7f41d0fc63a27de',NULL,'JAKARTA',1,'125.160.231.124','glodoke08161101994','GLODOK E','nia355@suitmedia.com','08161101994',0,0,NULL,'2022-05-27 09:19:59','2022-05-27 09:19:59'),
+	(195,5494,'68f0ce29f57244d2405a276c61fb437f',NULL,'LAMPUNG',4,'114.124.209.28','tokoduniasobin08127223952','TOKO DUNIA SOBIN','nia1325@suitmedia.com','08127223952',0,0,NULL,'2022-05-27 09:28:17','2022-05-27 09:28:17'),
+	(196,5228,'e16a50f7cc944f9f3a7b44b13d9cadc6',NULL,'DENPASAR',3,'139.228.78.78','duniaelektronik08123787068','DUNIA ELEKTRONIK','nia976@suitmedia.com','08123787068',0,0,NULL,'2022-05-27 09:28:51','2022-05-27 09:28:51'),
+	(197,5210,'658aded5af6f473c0970a9f2698e07c1',NULL,'DENPASAR',3,'114.122.134.221','cahayaabadi082342031999','CAHAYA ABADI','nia957@suitmedia.com','082342031999',0,0,NULL,'2022-05-27 09:32:06','2022-05-27 09:32:06'),
+	(198,4972,'e9f8b933412776dbdd9633d808763da5',NULL,'JOGJAKARTA',2,'36.72.215.47','sekawan085643999809','SEKAWAN','nia617@suitmedia.com','085643999809',0,0,NULL,'2022-05-27 09:33:10','2022-05-27 09:33:10'),
+	(199,5451,'447cdb704d71451abb0648943815f6a5',NULL,'LAMPUNG',4,'125.165.186.175','cahaya082177285070','CAHAYA','nia1244@suitmedia.com','082177285070',0,0,NULL,'2022-05-27 09:33:57','2022-05-27 09:33:57'),
+	(200,5260,'56f4c2c3899949fde670facd2d1329ba',NULL,'PALEMBANG',4,'110.137.75.242','rizkafurniture082281380898','RIZKA FURNITURE','nia1031@suitmedia.com','082281380898',0,0,NULL,'2022-05-27 09:42:04','2022-05-27 09:42:04'),
+	(201,4496,'98e9f8f32dc76bf472d32de16abc8b02',NULL,'JAKARTA',1,'36.77.218.205','iramaelectronic087771859381','IRAMA ELECTRONIC','nia10@suitmedia.com','087771859381',0,0,NULL,'2022-05-27 09:42:15','2022-05-27 09:42:15'),
+	(202,4909,'fa00bc3c26de011507b09bae678c335e',NULL,'CIREBON',2,'180.241.240.237','mulyaelektronik082128294102','MULYA ELEKTRONIK','nia533@suitmedia.com','082128294102',0,0,NULL,'2022-05-27 09:43:09','2022-05-27 09:43:09'),
+	(203,4875,'28589e4840522e3418772240ad1f0a3a',NULL,'BANDUNG',2,'140.213.15.166','trendelektronik08156014560','TREND ELEKTRONIK','nia756@suitmedia.com','08156014560',0,0,NULL,'2022-05-27 09:44:21','2022-05-27 09:44:21'),
+	(204,5438,'85da68e64517fcb4d4755846191cf3fd',NULL,'LAMPUNG',4,'182.3.105.89','cahayario081369265332','CAHAYA RIO','nia1273@suitmedia.com','081369265332',0,0,NULL,'2022-05-27 09:44:32','2022-05-27 09:44:32'),
+	(205,4602,'b4dbb95fc4c99b0b6947999aae45979c',NULL,'JAKARTA',1,'182.3.37.49','jayapesing081314158955','JAYA PESING','nia438@suitmedia.com','081314158955',0,0,NULL,'2022-05-27 09:51:02','2022-05-27 09:51:02'),
+	(206,5017,'c9d5f556ff23ab0eebbc0f810d5151e0',NULL,'CIREBON',2,'114.122.101.209','cahayaagung081802287702','CAHAYA AGUNG','nia685@suitmedia.com','081802287702',0,0,NULL,'2022-05-27 09:52:10','2022-05-27 09:52:10'),
+	(207,4978,'38169ae30b05a9fc022283f1214f7742',NULL,'CIREBON',2,'36.72.89.205','alfamarwah082129067944','ALFA MARWAH','nia624@suitmedia.com','082129067944',0,0,NULL,'2022-05-27 09:54:13','2022-05-27 09:54:13'),
+	(208,5020,'2694b5f3e357a4761234562afe892ae1',NULL,'JOGJAKARTA',2,'182.2.71.58','cvsejahterajaya085327914573','CV. SEJAHTERA JAYA','nia692@suitmedia.com','085327914573',0,0,NULL,'2022-05-27 10:01:03','2022-05-27 10:01:03'),
+	(209,5084,'2e58f307f625d6ccbb9fc5c444e38240',NULL,'SERANG',1,'182.3.37.20','galunggung085311345004','GALUNGGUNG','nia797@suitmedia.com','085311345004',0,0,NULL,'2022-05-27 10:03:46','2022-05-27 10:03:46'),
+	(210,4740,'89995a6952e55f87c3f706fac247ecbb',NULL,'SERANG',1,'140.213.33.253','jaya0811840135','85 JAYA','nia266@suitmedia.com','0811840135',0,0,NULL,'2022-05-27 10:08:00','2022-05-27 10:08:00'),
+	(211,4965,'2f9cebe795e13f14c3689b42193eeeaa',NULL,'JOGJAKARTA',2,'103.165.157.16','king082260045782','KING','nia763@suitmedia.com','082260045782',0,0,NULL,'2022-05-27 10:10:39','2022-05-27 10:10:39'),
+	(212,4977,'7b35654c1bd418175fa7a0f9663981e8',NULL,'SEMARANG',2,'182.2.41.31','rejeki081390929222','REJEKI','nia783@suitmedia.com','081390929222',0,0,NULL,'2022-05-27 10:28:47','2022-05-27 10:28:47'),
+	(213,4976,'cdde1f339352feb02d9be12e764957dd',NULL,'JOGJAKARTA',2,'36.81.25.220','jaya082227892286','9JAYA','nia622@suitmedia.com','082227892286',0,0,NULL,'2022-05-27 10:30:34','2022-05-27 10:30:34'),
+	(214,5493,'8138a1d98f0d43caa304cc20f0cc075b',NULL,'LAMPUNG',4,'182.3.104.187','tokowawan081367228800','TOKO WAWAN','nia1321@suitmedia.com','081367228800',0,0,NULL,'2022-05-27 10:33:47','2022-05-27 10:33:47'),
+	(215,4895,'f30636b65ccd4693da518f001abcf084',NULL,'JOGJAKARTA',2,'36.73.32.230','central085227115551','CENTRAL','nia762@suitmedia.com','085227115551',0,0,NULL,'2022-05-27 10:57:17','2022-05-27 10:57:17'),
+	(216,5059,'722ec0648c9b223215efbb3485cf91a7',NULL,'PURWOKERTO',2,'182.2.41.213','tokomulya081391288200','TOKO MULYA','nia749@suitmedia.com','081391288200',0,0,NULL,'2022-05-27 11:49:53','2022-05-27 11:49:53'),
+	(217,4586,'343326d0905ad46b042e508d5d87e596',NULL,'SERANG',1,'180.243.2.137','cahayaelektronik08129431318','CAHAYA ELEKTRONIK','nia101@suitmedia.com','08129431318',0,0,NULL,'2022-05-27 12:07:31','2022-05-27 12:07:31'),
+	(218,4847,'ac9b2313d1ca141405cd5e1f70ebb87d',NULL,'BANDUNG',2,'36.81.223.196','ganda082219032868','GANDA','nia415@suitmedia.com','082219032868',0,0,NULL,'2022-05-27 12:31:13','2022-05-27 12:31:13'),
+	(219,5472,'dfc2451c40ea2190f07fbca50ede0e32',NULL,'LAMPUNG',4,'182.253.63.7','indocool 081285977738 ','INDOCOOL','nia1268@suitmedia.com','081285977738',0,0,NULL,'2022-05-27 12:45:24','2022-05-27 12:45:24'),
+	(220,5632,'bca68ee58c69f7b58035394a8c431e43',NULL,'MEDAN',1,'139.194.159.143','samson081363603338','SAMSON','nia1557@suitmedia.com','081363603338',0,0,NULL,'2022-05-27 13:11:25','2022-05-27 13:11:25'),
+	(221,6304,'9b38ce8f71b9e6ac45e06c7156e11218',NULL,'SAMARINDA',2,'114.122.233.175','tokorahman081347666662','TOKO RAHMAN','nia4660@suitmedia.com','081347666662',0,0,NULL,'2022-05-27 13:43:43','2022-05-27 13:43:43'),
+	(222,6272,'5de19400d34f4c8c121d520c5a0812ca',NULL,'BANJARMASIN',2,'182.1.212.193','hsukron082211330944','H.SUKRON','nia4523@suitmedia.com','082211330944',0,0,NULL,'2022-05-27 14:06:50','2022-05-27 14:06:50'),
+	(223,5673,'358847516c38ea5c89840f6acbd02fee',NULL,'MEDAN',1,'114.122.12.250','jayamakmur081328265854','JAYA MAKMUR','nia1688@suitmedia.com','081328265854',0,0,NULL,'2022-05-27 14:22:09','2022-05-27 14:22:09'),
+	(224,6164,'f6e5a4e76ac66bfa3a654726833700f0',NULL,'PONTIANAK',2,'180.242.234.222','general085393345353','GENERAL','nia4985@suitmedia.com','085393345353',0,0,NULL,'2022-05-27 14:35:15','2022-05-27 14:35:15'),
+	(225,5589,'d5d4abf3f0308f740b4dda7594f6b29b',NULL,'JOGJAKARTA',2,'114.142.168.47','mustikaelektronik085229066208','MUSTIKA ELEKTRONIK','mustikaelektronik085229066208@email.com','085229066208',0,0,NULL,'2022-05-27 16:06:43','2022-05-27 16:06:43'),
+	(226,4986,'89b39496788097bf313f082eb58c6408',NULL,'CIREBON',2,'36.68.55.159','alfa081902550088','ALFA','nia634@suitmedia.com','081902550088',0,0,NULL,'2022-05-27 16:17:22','2022-05-27 16:17:22');
+
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table visitor_links
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `visitor_links`;
+
+CREATE TABLE `visitor_links` (
+  `pengunjung_id` int NOT NULL AUTO_INCREMENT,
+  `pengunjung_tanggal` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `pengunjung_ip` varchar(40) DEFAULT NULL,
+  `pengunjung_perangkat` varchar(100) DEFAULT NULL,
+  `pengunjung_link_id` int DEFAULT NULL,
+  PRIMARY KEY (`pengunjung_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `visitor_links` WRITE;
+/*!40000 ALTER TABLE `visitor_links` DISABLE KEYS */;
+
+INSERT INTO `visitor_links` (`pengunjung_id`, `pengunjung_tanggal`, `pengunjung_ip`, `pengunjung_perangkat`, `pengunjung_link_id`)
+VALUES
+	(1,'2022-04-19 15:29:25','::1','Chrome',1),
+	(2,'2022-04-19 15:30:57','::1','Chrome',2);
+
+/*!40000 ALTER TABLE `visitor_links` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table visitors
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `visitors`;
+
+CREATE TABLE `visitors` (
+  `pengunjung_id` int NOT NULL AUTO_INCREMENT,
+  `pengunjung_tanggal` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `pengunjung_ip` varchar(40) DEFAULT NULL,
+  `pengunjung_perangkat` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`pengunjung_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+LOCK TABLES `visitors` WRITE;
+/*!40000 ALTER TABLE `visitors` DISABLE KEYS */;
+
+INSERT INTO `visitors` (`pengunjung_id`, `pengunjung_tanggal`, `pengunjung_ip`, `pengunjung_perangkat`)
+VALUES
+	(1,'2022-04-19 14:48:25','::1','Chrome'),
+	(2,'2022-04-20 04:28:38','::1','Chrome'),
+	(3,'2022-05-09 05:01:23','::1','Chrome'),
+	(4,'2022-05-09 05:48:18','192.168.100.3','Chrome'),
+	(5,'2022-05-10 02:17:27','::1','Chrome'),
+	(6,'2022-05-10 06:19:24','192.168.100.3','Chrome'),
+	(7,'2022-05-11 01:48:53','::1','Chrome'),
+	(8,'2022-05-12 02:40:03','::1','Chrome'),
+	(9,'2022-05-12 05:11:35','192.168.100.34','Chrome'),
+	(10,'2022-05-12 05:14:16','192.168.100.3','Chrome'),
+	(11,'2022-05-12 05:38:22','192.168.100.116','Safari'),
+	(12,'2022-05-13 06:38:17','::1','Chrome'),
+	(13,'2022-05-16 15:25:59','::1','Chrome'),
+	(14,'2022-05-17 03:38:30','::1','Chrome'),
+	(15,'2022-05-17 03:49:51','172.10.20.98','Safari'),
+	(16,'2022-05-18 02:44:29','::1','Chrome'),
+	(17,'2022-05-18 08:01:38','192.168.100.34','Chrome'),
+	(18,'2022-05-18 17:05:03','::1','Chrome'),
+	(19,'2022-05-19 02:51:34','127.0.0.1','Other'),
+	(20,'2022-05-20 06:44:36','::1','Chrome'),
+	(21,'2022-05-23 08:04:44','::1','Chrome'),
+	(22,'2022-05-23 17:00:05','::1','Chrome'),
+	(23,'2022-05-25 04:48:33','::1','Chrome'),
+	(24,'2022-05-26 02:40:08','::1','Safari'),
+	(25,'2022-05-26 15:30:55','110.137.193.204','Chrome'),
+	(26,'2022-05-26 15:44:02','139.192.226.204','Chrome'),
+	(27,'2022-05-27 01:17:40','139.192.226.204','Chrome'),
+	(28,'2022-05-27 01:19:48','111.95.151.12','Chrome'),
+	(29,'2022-05-27 01:29:02','110.137.75.252','Chrome'),
+	(30,'2022-05-27 01:40:13','110.137.193.204','Chrome'),
+	(31,'2022-05-27 01:44:57','140.0.213.8','Mozilla'),
+	(32,'2022-05-27 01:47:14','180.248.21.248','Chrome'),
+	(33,'2022-05-27 01:58:41','125.163.118.39','Chrome'),
+	(34,'2022-05-27 01:58:59','103.147.9.68','Other'),
+	(35,'2022-05-27 01:59:43','180.243.12.67','Chrome'),
+	(36,'2022-05-27 02:20:23','202.80.216.98','Mozilla'),
+	(37,'2022-05-27 03:04:28','114.124.130.22','Chrome'),
+	(38,'2022-05-27 03:07:56','114.124.180.81','Mozilla'),
+	(39,'2022-05-27 03:12:45','36.73.33.119','Mozilla'),
+	(40,'2022-05-27 03:28:16','182.0.240.102','Chrome'),
+	(41,'2022-05-27 04:00:09','180.241.242.162','Chrome'),
+	(42,'2022-05-27 04:06:32','114.125.232.32','Chrome'),
+	(43,'2022-05-27 04:07:00','180.241.243.194','Chrome'),
+	(44,'2022-05-27 04:09:03','110.137.142.90','Chrome'),
+	(45,'2022-05-27 04:09:52','180.241.241.96','Chrome'),
+	(46,'2022-05-27 04:10:17','114.125.253.147','Chrome'),
+	(47,'2022-05-27 04:12:39','110.138.65.128','Chrome'),
+	(48,'2022-05-27 04:12:45','114.125.253.100','Chrome'),
+	(49,'2022-05-27 04:12:49','112.215.151.18','Chrome'),
+	(50,'2022-05-27 04:14:03','114.125.230.26','Chrome'),
+	(51,'2022-05-27 04:21:28','110.138.219.8','Chrome'),
+	(52,'2022-05-27 04:29:57','140.213.35.240','Mozilla'),
+	(53,'2022-05-27 04:40:02','114.124.143.35','Chrome'),
+	(54,'2022-05-27 04:47:43','182.3.41.53','Chrome'),
+	(55,'2022-05-27 04:49:08','114.124.151.230','Mozilla'),
+	(56,'2022-05-27 04:49:10','114.124.176.55','Chrome'),
+	(57,'2022-05-27 04:52:19','182.3.72.63','Chrome'),
+	(58,'2022-05-27 04:54:09','182.3.104.34','Chrome'),
+	(59,'2022-05-27 05:01:47','114.124.149.102','Mozilla'),
+	(60,'2022-05-27 05:04:46','180.254.161.86','Chrome'),
+	(61,'2022-05-27 05:06:19','180.214.232.11','Chrome'),
+	(62,'2022-05-27 05:20:03','182.1.112.195','Mozilla'),
+	(63,'2022-05-27 05:23:59','112.215.151.2','Mozilla'),
+	(64,'2022-05-27 05:29:26','36.68.8.78','Chrome'),
+	(65,'2022-05-27 05:30:56','182.253.250.161','Chrome'),
+	(66,'2022-05-27 05:38:05','66.96.225.109','Chrome'),
+	(67,'2022-05-27 05:45:09','182.3.38.156','Chrome'),
+	(68,'2022-05-27 06:07:49','114.124.131.86','Chrome'),
+	(69,'2022-05-27 06:09:30','182.1.229.112','Chrome'),
+	(70,'2022-05-27 06:16:28','120.188.32.12','Mozilla'),
+	(71,'2022-05-27 06:16:40','182.3.38.118','Chrome'),
+	(72,'2022-05-27 06:17:02','120.188.95.137','Chrome'),
+	(73,'2022-05-27 06:17:40','103.135.5.110','Chrome'),
+	(74,'2022-05-27 06:18:19','114.124.245.10','Chrome'),
+	(75,'2022-05-27 06:27:36','36.74.40.123','Mozilla'),
+	(76,'2022-05-27 06:28:50','114.124.149.192','Mozilla'),
+	(77,'2022-05-27 06:31:21','180.254.168.135','Chrome'),
+	(78,'2022-05-27 06:35:22','114.125.237.139','Chrome'),
+	(79,'2022-05-27 06:39:31','103.108.32.92','Chrome'),
+	(80,'2022-05-27 06:46:14','114.125.124.168','Chrome'),
+	(81,'2022-05-27 06:47:02','114.124.148.97','Mozilla'),
+	(82,'2022-05-27 06:54:48','115.178.192.11','Chrome'),
+	(83,'2022-05-27 06:55:54','125.166.119.125','Mozilla'),
+	(84,'2022-05-27 07:00:20','103.252.200.30','Mozilla'),
+	(85,'2022-05-27 07:07:57','175.158.53.162','Chrome'),
+	(86,'2022-05-27 07:09:28','140.213.127.160','Chrome'),
+	(87,'2022-05-27 07:11:15','110.137.74.136','Mozilla'),
+	(88,'2022-05-27 07:12:31','140.213.186.25','Chrome'),
+	(89,'2022-05-27 07:13:43','125.167.48.72','Chrome'),
+	(90,'2022-05-27 07:14:48','36.72.214.152','Chrome'),
+	(91,'2022-05-27 07:15:19','182.0.233.20','Chrome'),
+	(92,'2022-05-27 07:16:20','180.251.251.147','Mozilla'),
+	(93,'2022-05-27 07:17:26','182.0.147.139','Chrome'),
+	(94,'2022-05-27 07:17:50','36.75.119.71','Chrome'),
+	(95,'2022-05-27 07:18:46','180.253.166.20','Chrome'),
+	(96,'2022-05-27 07:19:54','180.242.44.201','Chrome'),
+	(97,'2022-05-27 07:23:35','36.68.9.172','Chrome'),
+	(98,'2022-05-27 07:24:25','125.167.49.115','Chrome'),
+	(99,'2022-05-27 07:24:44','125.164.22.42','Chrome'),
+	(100,'2022-05-27 07:24:47','125.164.16.80','Chrome'),
+	(101,'2022-05-27 07:27:35','110.137.38.107','Chrome'),
+	(102,'2022-05-27 07:28:15','120.188.77.52','Chrome'),
+	(103,'2022-05-27 07:28:40','114.122.73.201','Chrome'),
+	(104,'2022-05-27 07:29:18','110.136.217.233','Chrome'),
+	(105,'2022-05-27 07:30:04','112.215.235.117','Mozilla'),
+	(106,'2022-05-27 07:31:22','110.137.73.157','Chrome'),
+	(107,'2022-05-27 07:32:36','36.73.35.2','Chrome'),
+	(108,'2022-05-27 07:32:47','182.2.38.172','Mozilla'),
+	(109,'2022-05-27 07:32:50','114.5.214.136','Chrome'),
+	(110,'2022-05-27 07:33:56','125.164.19.241','Chrome'),
+	(111,'2022-05-27 07:35:11','114.124.237.116','Mozilla'),
+	(112,'2022-05-27 07:35:28','182.3.37.52','Chrome'),
+	(113,'2022-05-27 07:35:47','140.213.130.97','Chrome'),
+	(114,'2022-05-27 07:36:39','36.75.71.61','Chrome'),
+	(115,'2022-05-27 07:37:25','180.254.164.146','Chrome'),
+	(116,'2022-05-27 07:37:58','114.122.104.242','Chrome'),
+	(117,'2022-05-27 07:38:11','180.241.242.213','Chrome'),
+	(118,'2022-05-27 07:40:13','125.164.22.31','Chrome'),
+	(119,'2022-05-27 07:40:17','125.164.23.199','Chrome'),
+	(120,'2022-05-27 07:42:25','36.71.37.223','Chrome'),
+	(121,'2022-05-27 07:42:47','180.244.165.185','Chrome'),
+	(122,'2022-05-27 07:43:20','114.122.232.183','Chrome'),
+	(123,'2022-05-27 07:44:04','203.78.114.123','Chrome'),
+	(124,'2022-05-27 07:44:18','114.125.88.101','Chrome'),
+	(125,'2022-05-27 07:45:14','182.3.70.104','Chrome'),
+	(126,'2022-05-27 07:45:41','125.165.229.88','Mozilla'),
+	(127,'2022-05-27 07:46:05','110.137.103.120','Chrome'),
+	(128,'2022-05-27 07:46:21','110.138.212.80','Chrome'),
+	(129,'2022-05-27 07:46:40','180.254.66.36','Mozilla'),
+	(130,'2022-05-27 07:48:54','180.246.221.183','Chrome'),
+	(131,'2022-05-27 07:50:06','182.253.151.168','Chrome'),
+	(132,'2022-05-27 07:51:00','182.2.69.240','Chrome'),
+	(133,'2022-05-27 07:51:06','180.243.73.12','Chrome'),
+	(134,'2022-05-27 07:51:08','125.167.50.188','Chrome'),
+	(135,'2022-05-27 07:52:58','182.0.170.221','Chrome'),
+	(136,'2022-05-27 07:53:03','125.164.18.131','Chrome'),
+	(137,'2022-05-27 07:53:30','125.164.234.145','Chrome'),
+	(138,'2022-05-27 07:53:35','180.254.66.226','Mozilla'),
+	(139,'2022-05-27 07:54:00','103.108.33.69','Chrome'),
+	(140,'2022-05-27 07:54:00','140.213.59.127','Chrome'),
+	(141,'2022-05-27 07:54:21','125.167.59.219','Chrome'),
+	(142,'2022-05-27 07:54:47','114.124.149.240','Mozilla'),
+	(143,'2022-05-27 07:54:56','180.252.93.229','Chrome'),
+	(144,'2022-05-27 07:55:02','36.65.165.167','Chrome'),
+	(145,'2022-05-27 07:55:20','180.243.0.86','Chrome'),
+	(146,'2022-05-27 07:55:40','140.213.9.230','Chrome'),
+	(147,'2022-05-27 07:55:59','125.164.21.238','Chrome'),
+	(148,'2022-05-27 07:56:03','114.125.126.48','Chrome'),
+	(149,'2022-05-27 07:56:05','114.10.7.56','Chrome'),
+	(150,'2022-05-27 07:56:24','182.3.68.74','Chrome'),
+	(151,'2022-05-27 07:56:33','36.74.82.252','Mozilla'),
+	(152,'2022-05-27 07:56:46','182.2.41.158','Chrome'),
+	(153,'2022-05-27 07:56:50','114.5.240.33','Chrome'),
+	(154,'2022-05-27 07:57:07','180.254.64.10','Mozilla'),
+	(155,'2022-05-27 07:57:16','182.0.200.8','Chrome'),
+	(156,'2022-05-27 07:58:02','125.164.16.174','Chrome'),
+	(157,'2022-05-27 07:58:34','112.215.243.132','Chrome'),
+	(158,'2022-05-27 07:58:54','36.73.32.196','Chrome'),
+	(159,'2022-05-27 07:59:06','114.125.232.52','Chrome'),
+	(160,'2022-05-27 08:00:22','125.164.19.56','Chrome'),
+	(161,'2022-05-27 08:00:41','125.160.231.124','Mozilla'),
+	(162,'2022-05-27 08:00:49','125.166.12.34','Chrome'),
+	(163,'2022-05-27 08:00:55','125.164.232.45','Chrome'),
+	(164,'2022-05-27 08:01:05','180.244.162.8','Chrome'),
+	(165,'2022-05-27 08:01:12','180.252.112.30','Chrome'),
+	(166,'2022-05-27 08:01:19','182.0.234.36','Chrome'),
+	(167,'2022-05-27 08:01:31','114.142.169.15','Chrome'),
+	(168,'2022-05-27 08:01:37','110.137.36.32','Chrome'),
+	(169,'2022-05-27 08:01:42','125.164.20.131','Chrome'),
+	(170,'2022-05-27 08:01:45','140.213.138.146','Chrome'),
+	(171,'2022-05-27 08:01:49','118.99.83.51','Chrome'),
+	(172,'2022-05-27 08:02:00','110.137.131.224','Chrome'),
+	(173,'2022-05-27 08:02:10','120.188.38.243','Chrome'),
+	(174,'2022-05-27 08:02:11','180.243.1.131','Mozilla'),
+	(175,'2022-05-27 08:02:15','110.138.33.85','Mozilla'),
+	(176,'2022-05-27 08:02:16','112.215.65.89','Chrome'),
+	(177,'2022-05-27 08:02:54','114.124.180.225','Mozilla'),
+	(178,'2022-05-27 08:03:08','36.73.33.177','Chrome'),
+	(179,'2022-05-27 08:03:20','182.3.37.40','Chrome'),
+	(180,'2022-05-27 08:03:21','111.65.61.92','Mozilla'),
+	(181,'2022-05-27 08:03:23','125.164.17.56','Chrome'),
+	(182,'2022-05-27 08:03:24','182.3.70.19','Chrome'),
+	(183,'2022-05-27 08:03:35','180.254.167.136','Chrome'),
+	(184,'2022-05-27 08:03:41','182.3.37.74','Chrome'),
+	(185,'2022-05-27 08:03:44','114.125.77.195','Chrome'),
+	(186,'2022-05-27 08:03:58','114.125.251.33','Chrome'),
+	(187,'2022-05-27 08:04:31','114.125.117.164','Chrome'),
+	(188,'2022-05-27 08:05:06','36.69.57.134','Chrome'),
+	(189,'2022-05-27 08:05:07','182.3.71.209','Chrome'),
+	(190,'2022-05-27 08:05:12','125.166.119.187','Chrome'),
+	(191,'2022-05-27 08:05:19','120.188.4.134','Chrome'),
+	(192,'2022-05-27 08:06:22','125.161.119.226','Chrome'),
+	(193,'2022-05-27 08:06:44','180.248.1.142','Mozilla'),
+	(194,'2022-05-27 08:06:48','125.161.157.253','Chrome'),
+	(195,'2022-05-27 08:07:22','114.124.236.69','Mozilla'),
+	(196,'2022-05-27 08:08:47','182.253.151.154','Chrome'),
+	(197,'2022-05-27 08:08:54','110.137.38.189','Chrome'),
+	(198,'2022-05-27 08:08:59','36.77.78.10','Mozilla'),
+	(199,'2022-05-27 08:09:04','114.141.53.26','Chrome'),
+	(200,'2022-05-27 08:09:10','114.125.57.74','Mozilla'),
+	(201,'2022-05-27 08:09:58','114.122.68.147','Chrome'),
+	(202,'2022-05-27 08:10:41','180.243.12.82','Chrome'),
+	(203,'2022-05-27 08:10:59','202.80.213.168','Chrome'),
+	(204,'2022-05-27 08:11:04','110.137.75.80','Chrome'),
+	(205,'2022-05-27 08:11:12','180.214.233.76','Chrome'),
+	(206,'2022-05-27 08:11:46','182.3.101.193','Chrome'),
+	(207,'2022-05-27 08:11:59','182.253.127.164','Chrome'),
+	(208,'2022-05-27 08:12:18','114.125.104.113','Chrome'),
+	(209,'2022-05-27 08:12:42','180.241.241.67','Chrome'),
+	(210,'2022-05-27 08:13:17','114.4.78.15','Chrome'),
+	(211,'2022-05-27 08:13:33','114.125.251.17','Chrome'),
+	(212,'2022-05-27 08:13:35','36.73.33.141','Chrome'),
+	(213,'2022-05-27 08:13:35','180.252.118.155','Chrome'),
+	(214,'2022-05-27 08:13:41','114.124.210.108','Chrome'),
+	(215,'2022-05-27 08:14:02','114.125.228.6','Chrome'),
+	(216,'2022-05-27 08:14:13','114.124.130.24','Chrome'),
+	(217,'2022-05-27 08:15:00','114.124.243.46','Mozilla'),
+	(218,'2022-05-27 08:15:03','182.253.127.207','Chrome'),
+	(219,'2022-05-27 08:15:19','114.124.131.88','Chrome'),
+	(220,'2022-05-27 08:15:51','182.3.39.3','Chrome'),
+	(221,'2022-05-27 08:16:51','125.167.58.246','Chrome'),
+	(222,'2022-05-27 08:16:56','61.94.54.80','Chrome'),
+	(223,'2022-05-27 08:16:59','182.0.198.190','Chrome'),
+	(224,'2022-05-27 08:17:21','125.167.59.194','Chrome'),
+	(225,'2022-05-27 08:17:27','114.125.125.48','Chrome'),
+	(226,'2022-05-27 08:17:45','182.2.39.8','Chrome'),
+	(227,'2022-05-27 08:17:55','110.137.75.129','Chrome'),
+	(228,'2022-05-27 08:18:27','120.188.4.244','Chrome'),
+	(229,'2022-05-27 08:19:28','112.215.209.43','Chrome'),
+	(230,'2022-05-27 08:20:18','111.65.38.232','Mozilla'),
+	(231,'2022-05-27 08:20:29','180.242.9.48','Chrome'),
+	(232,'2022-05-27 08:21:42','182.0.181.33','Chrome'),
+	(233,'2022-05-27 08:22:05','182.1.116.111','Chrome'),
+	(234,'2022-05-27 08:22:21','180.252.171.248','Chrome'),
+	(235,'2022-05-27 08:22:30','110.137.36.50','Chrome'),
+	(236,'2022-05-27 08:22:48','140.213.136.3','Chrome'),
+	(237,'2022-05-27 08:23:08','182.1.76.154','Mozilla'),
+	(238,'2022-05-27 08:23:27','180.244.166.119','Chrome'),
+	(239,'2022-05-27 08:23:28','182.0.173.1','Chrome'),
+	(240,'2022-05-27 08:23:30','36.74.66.31','Mozilla'),
+	(241,'2022-05-27 08:23:31','180.243.5.9','Mozilla'),
+	(242,'2022-05-27 08:23:55','140.213.42.14','Mozilla'),
+	(243,'2022-05-27 08:25:21','120.188.92.35','Chrome'),
+	(244,'2022-05-27 08:25:32','180.253.162.142','Chrome'),
+	(245,'2022-05-27 08:25:46','180.249.185.234','Chrome'),
+	(246,'2022-05-27 08:25:47','140.213.132.121','Mozilla'),
+	(247,'2022-05-27 08:27:35','180.214.233.29','Chrome'),
+	(248,'2022-05-27 08:27:40','125.164.18.190','Mozilla'),
+	(249,'2022-05-27 08:28:26','175.158.37.91','Chrome'),
+	(250,'2022-05-27 08:28:47','114.4.212.147','Chrome'),
+	(251,'2022-05-27 08:28:48','180.243.10.216','Chrome'),
+	(252,'2022-05-27 08:28:49','111.65.60.143','Mozilla'),
+	(253,'2022-05-27 08:29:17','114.124.246.168','Chrome'),
+	(254,'2022-05-27 08:30:06','223.255.230.74','Mozilla'),
+	(255,'2022-05-27 08:30:21','120.188.66.103','Chrome'),
+	(256,'2022-05-27 08:30:44','114.124.211.214','Chrome'),
+	(257,'2022-05-27 08:31:52','110.137.36.98','Chrome'),
+	(258,'2022-05-27 08:32:15','180.249.157.124','Chrome'),
+	(259,'2022-05-27 08:32:22','103.122.67.145','Chrome'),
+	(260,'2022-05-27 08:32:45','110.137.74.16','Mozilla'),
+	(261,'2022-05-27 08:33:02','36.74.40.145','Chrome'),
+	(262,'2022-05-27 08:35:45','114.125.252.175','Chrome'),
+	(263,'2022-05-27 08:37:37','182.253.132.226','Chrome'),
+	(264,'2022-05-27 08:39:44','140.213.140.198','Chrome'),
+	(265,'2022-05-27 08:39:47','116.206.29.58','Chrome'),
+	(266,'2022-05-27 08:39:48','112.215.243.47','Chrome'),
+	(267,'2022-05-27 08:40:25','36.73.35.114','Chrome'),
+	(268,'2022-05-27 08:41:31','114.124.207.86','Mozilla'),
+	(269,'2022-05-27 08:44:14','182.3.36.219','Chrome'),
+	(270,'2022-05-27 08:44:51','114.125.236.195','Chrome'),
+	(271,'2022-05-27 08:45:33','113.11.183.68','Chrome'),
+	(272,'2022-05-27 08:50:28','182.2.167.134','Mozilla'),
+	(273,'2022-05-27 08:51:13','36.76.203.10','Chrome'),
+	(274,'2022-05-27 08:51:16','114.124.240.26','Chrome'),
+	(275,'2022-05-27 08:51:21','66.96.237.166','Chrome'),
+	(276,'2022-05-27 08:51:23','140.213.59.2','Chrome'),
+	(277,'2022-05-27 08:52:17','116.206.35.10','Chrome'),
+	(278,'2022-05-27 08:53:15','182.2.72.115','Chrome'),
+	(279,'2022-05-27 08:53:34','125.164.22.81','Chrome'),
+	(280,'2022-05-27 08:54:04','125.164.23.204','Chrome'),
+	(281,'2022-05-27 08:55:42','182.3.41.197','Chrome'),
+	(282,'2022-05-27 08:56:11','36.73.34.253','Chrome'),
+	(283,'2022-05-27 08:57:28','182.1.232.19','Chrome'),
+	(284,'2022-05-27 08:59:33','180.254.174.158','Chrome'),
+	(285,'2022-05-27 09:01:29','182.1.80.170','Chrome'),
+	(286,'2022-05-27 09:01:53','182.1.229.226','Chrome'),
+	(287,'2022-05-27 09:02:37','103.144.175.28','Chrome'),
+	(288,'2022-05-27 09:02:50','140.213.150.145','Chrome'),
+	(289,'2022-05-27 09:03:07','125.167.49.164','Chrome'),
+	(290,'2022-05-27 09:03:09','125.164.23.24','Mozilla'),
+	(291,'2022-05-27 09:03:42','110.136.73.8','Mozilla'),
+	(292,'2022-05-27 09:04:19','103.144.14.26','Chrome'),
+	(293,'2022-05-27 09:06:30','180.252.135.135','Chrome'),
+	(294,'2022-05-27 09:06:48','114.122.132.70','Chrome'),
+	(295,'2022-05-27 09:08:11','114.125.234.206','Chrome'),
+	(296,'2022-05-27 09:08:45','125.167.58.142','Mozilla'),
+	(297,'2022-05-27 09:09:07','114.125.247.130','Chrome'),
+	(298,'2022-05-27 09:09:07','36.76.194.231','Chrome'),
+	(299,'2022-05-27 09:11:13','114.122.132.74','Chrome'),
+	(300,'2022-05-27 09:11:14','114.122.134.222','Chrome'),
+	(301,'2022-05-27 09:12:40','125.160.238.15','Chrome'),
+	(302,'2022-05-27 09:13:44','114.125.111.180','Chrome'),
+	(303,'2022-05-27 09:13:50','114.125.92.88','Mozilla'),
+	(304,'2022-05-27 09:15:54','114.125.101.116','Chrome'),
+	(305,'2022-05-27 09:16:40','125.165.213.248','Chrome'),
+	(306,'2022-05-27 09:16:55','110.137.75.53','Mozilla'),
+	(307,'2022-05-27 09:18:59','180.242.6.191','Chrome'),
+	(308,'2022-05-27 09:20:07','114.124.148.113','Mozilla'),
+	(309,'2022-05-27 09:23:09','116.206.29.7','Chrome'),
+	(310,'2022-05-27 09:23:38','111.65.38.180','Mozilla'),
+	(311,'2022-05-27 09:24:25','180.214.232.17','Chrome'),
+	(312,'2022-05-27 09:27:58','111.65.69.248','Mozilla'),
+	(313,'2022-05-27 09:28:17','182.16.178.43','Mozilla'),
+	(314,'2022-05-27 09:28:34','182.0.242.250','Chrome'),
+	(315,'2022-05-27 09:28:51','139.228.78.78','Mozilla'),
+	(316,'2022-05-27 09:32:06','114.122.134.221','Chrome'),
+	(317,'2022-05-27 09:33:10','36.72.213.18','Chrome'),
+	(318,'2022-05-27 09:33:57','125.165.186.175','Chrome'),
+	(319,'2022-05-27 09:42:04','182.3.103.125','Chrome'),
+	(320,'2022-05-27 09:42:15','36.77.218.205','Chrome'),
+	(321,'2022-05-27 09:42:29','116.206.35.9','Chrome'),
+	(322,'2022-05-27 09:43:09','180.241.243.107','Chrome'),
+	(323,'2022-05-27 09:44:21','140.213.15.166','Mozilla'),
+	(324,'2022-05-27 09:44:32','182.3.105.89','Chrome'),
+	(325,'2022-05-27 09:46:04','114.124.206.118','Mozilla'),
+	(326,'2022-05-27 09:47:13','114.125.119.88','Mozilla'),
+	(327,'2022-05-27 09:51:02','182.3.37.49','Chrome'),
+	(328,'2022-05-27 09:52:10','114.122.101.209','Chrome'),
+	(329,'2022-05-27 09:54:14','114.122.73.245','Chrome'),
+	(330,'2022-05-27 09:54:16','114.122.73.225','Chrome'),
+	(331,'2022-05-27 10:01:03','36.80.154.206','Chrome'),
+	(332,'2022-05-27 10:01:52','114.125.249.69','Chrome'),
+	(333,'2022-05-27 10:03:02','114.125.244.42','Chrome'),
+	(334,'2022-05-27 10:03:46','182.3.37.20','Chrome'),
+	(335,'2022-05-27 10:04:51','140.213.44.155','Chrome'),
+	(336,'2022-05-27 10:08:00','140.213.33.253','Chrome'),
+	(337,'2022-05-27 10:10:05','125.164.17.120','Chrome'),
+	(338,'2022-05-27 10:10:39','182.2.73.156','Chrome'),
+	(339,'2022-05-27 10:11:27','114.125.247.136','Chrome'),
+	(340,'2022-05-27 10:14:10','202.80.213.140','Chrome'),
+	(341,'2022-05-27 10:17:54','182.2.133.6','Mozilla'),
+	(342,'2022-05-27 10:22:32','182.2.71.58','Chrome'),
+	(343,'2022-05-27 10:22:46','114.125.85.52','Chrome'),
+	(344,'2022-05-27 10:26:30','36.72.215.47','Chrome'),
+	(345,'2022-05-27 10:27:21','114.124.239.246','Mozilla'),
+	(346,'2022-05-27 10:28:47','182.2.41.31','Chrome'),
+	(347,'2022-05-27 10:30:35','36.81.25.220','Chrome'),
+	(348,'2022-05-27 10:33:47','182.3.104.187','Chrome'),
+	(349,'2022-05-27 10:37:23','182.0.197.94','Chrome'),
+	(350,'2022-05-27 10:42:25','140.213.169.210','Chrome'),
+	(351,'2022-05-27 10:43:55','110.137.75.242','Chrome'),
+	(352,'2022-05-27 10:44:23','114.124.209.28','Mozilla'),
+	(353,'2022-05-27 10:47:33','36.72.89.205','Chrome'),
+	(354,'2022-05-27 10:49:28','125.167.57.145','Chrome'),
+	(355,'2022-05-27 10:52:56','110.137.36.13','Chrome'),
+	(356,'2022-05-27 10:54:36','180.241.240.237','Chrome'),
+	(357,'2022-05-27 10:54:40','180.241.241.218','Chrome'),
+	(358,'2022-05-27 10:55:33','125.167.49.21','Chrome'),
+	(359,'2022-05-27 10:57:18','36.73.32.230','Chrome'),
+	(360,'2022-05-27 11:10:04','182.0.242.238','Chrome'),
+	(361,'2022-05-27 11:20:42','180.254.163.64','Chrome'),
+	(362,'2022-05-27 11:20:44','116.206.35.5','Chrome'),
+	(363,'2022-05-27 11:26:57','110.137.75.31','Mozilla'),
+	(364,'2022-05-27 11:27:44','114.10.23.228','Chrome'),
+	(365,'2022-05-27 11:29:28','114.125.250.22','Chrome'),
+	(366,'2022-05-27 11:36:04','125.164.17.190','Chrome'),
+	(367,'2022-05-27 11:36:04','125.164.20.115','Chrome'),
+	(368,'2022-05-27 11:37:07','36.69.81.61','Chrome'),
+	(369,'2022-05-27 11:39:46','125.164.21.28','Chrome'),
+	(370,'2022-05-27 11:49:53','182.2.41.213','Chrome'),
+	(371,'2022-05-27 12:07:31','180.243.2.137','Mozilla'),
+	(372,'2022-05-27 12:13:58','103.47.135.148','Chrome'),
+	(373,'2022-05-27 12:15:16','115.178.192.35','Chrome'),
+	(374,'2022-05-27 12:31:14','36.81.223.196','Chrome'),
+	(375,'2022-05-27 12:40:56','110.137.74.222','Mozilla'),
+	(376,'2022-05-27 12:45:24','182.253.63.7','Chrome'),
+	(377,'2022-05-27 12:54:17','180.243.6.111','Mozilla'),
+	(378,'2022-05-27 13:11:25','139.194.159.143','Chrome'),
+	(379,'2022-05-27 13:13:44','182.2.36.106','Chrome'),
+	(380,'2022-05-27 13:25:33','125.164.22.41','Chrome'),
+	(381,'2022-05-27 13:37:10','114.125.43.198','Chrome'),
+	(382,'2022-05-27 13:43:44','114.122.233.175','Mozilla'),
+	(383,'2022-05-27 13:52:43','125.164.19.175','Chrome'),
+	(384,'2022-05-27 14:06:50','182.1.212.193','Chrome'),
+	(385,'2022-05-27 14:22:10','114.122.12.250','Chrome'),
+	(386,'2022-05-27 14:31:46','182.0.242.144','Mozilla'),
+	(387,'2022-05-27 14:35:15','180.242.234.222','Chrome'),
+	(388,'2022-05-27 14:44:12','103.165.157.16','Chrome'),
+	(389,'2022-05-27 15:34:22','114.125.118.144','Chrome'),
+	(390,'2022-05-27 15:51:38','114.125.251.57','Chrome'),
+	(391,'2022-05-27 16:04:02','182.3.101.205','Chrome'),
+	(392,'2022-05-27 16:06:43','114.142.168.47','Chrome'),
+	(393,'2022-05-27 16:12:54','120.188.5.97','Chrome'),
+	(394,'2022-05-27 16:17:22','36.68.55.159','Chrome');
+
+/*!40000 ALTER TABLE `visitors` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
